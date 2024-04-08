@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoSchoolMessageGenerator", "AutoSchoolMessageGenerator\AutoSchoolMessageGenerator.csproj", "{6FA8CCDA-B9D8-453C-8364-7439337D700F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FA8CCDA-B9D8-453C-8364-7439337D700F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA8CCDA-B9D8-453C-8364-7439337D700F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA8CCDA-B9D8-453C-8364-7439337D700F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA8CCDA-B9D8-453C-8364-7439337D700F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4BA30C6B-0E86-4545-AF36-84338DBBBF30}
+	EndGlobalSection
+EndGlobal

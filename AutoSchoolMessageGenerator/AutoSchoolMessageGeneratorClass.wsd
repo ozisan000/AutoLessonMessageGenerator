@@ -1,0 +1,59 @@
+@startuml AutoGeneratorSchoolMessageGenerator
+
+'基底クラスたち
+
+'イベントクラス
+class CalenderEvent{
+    +readonly Date date
+    +readonly int startTime
+    +readonly int endTime
+    +readonly int LessonCount
+
+    +CalenderEvent(Date date,int startTime,int endTime)
+}
+
+'予約クラス
+class Reservation{
+    -readonly GuideGenerator _guideGenerator
+    -readonly DateItemGenerator _dateItemGenerator
+    -readonly List<CalenderEvent> _stackEvents
+    -readonly List<string> _stackDateItems
+    -readonly int lessonFee
+
+    +Reservation(int lessonFee,GuideGenerator guide,DateItemGenerator dateItem)
+    +void AddEvent(CalenderEvent cEvent)
+    +void RemoveEvent(int index)
+    +string GenerateGuide()
+    -int GetAllLessonCount()
+    -int GetTotalLessonFee()
+}
+
+'文章を生成するためのクラス
+package Generator{
+    '文章全体を生成するクラス
+    class GuideGenerator{
+        -readonly string guideFormat
+
+        +GuideGenerator(string path)
+        +string GenerateGuideText(ReadOnlyCollection<string> dateItems)
+    }
+
+    'コマごとの項目を生成するクラス
+    class DateItemGenerator{
+        -readonly string eventFormat
+
+        +DateItemGenerator(string path)
+       +string GenerateDateItemText(CalenderEvent cEvent)
+    }
+}
+
+
+
+Reservation "1" o-- "1..*" CalenderEvent
+
+CalenderEvent <.. DateItemGenerator
+
+Reservation o-- DateItemGenerator
+Reservation o-- GuideGenerator
+
+@enduml
