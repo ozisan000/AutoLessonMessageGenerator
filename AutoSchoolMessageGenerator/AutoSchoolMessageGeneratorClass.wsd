@@ -2,7 +2,7 @@
 
 '基底クラスたち
 
-'イベントクラス
+'ロジックイベントクラス
 class CalenderEvent{
     +readonly Date date
     +readonly int startTime
@@ -12,21 +12,20 @@ class CalenderEvent{
     +CalenderEvent(Date date,int startTime,int endTime)
 }
 
-'予約クラス
+'ロジック予約クラス
 class Reservation{
-    -readonly GuideGenerator _guideGenerator
-    -readonly DateItemGenerator _dateItemGenerator
-    -readonly List<CalenderEvent> _stackEvents
-    -readonly List<string> _stackDateItems
-    -readonly int lessonFee
+    +readonly ReadOnlyCollection<CalenderEvent> StackEvents
+    +readonly int LessonFee
 
-    +Reservation(int lessonFee,GuideGenerator guide,DateItemGenerator dateItem)
-    +void AddEvent(CalenderEvent cEvent)
-    +void RemoveEvent(int index)
-    +string GenerateGuide()
-    -int GetAllLessonCount()
-    -int GetTotalLessonFee()
+    +Reservation(int lessonFee)
+    -Reservation(Reservation oldReservation,ReadOnlyCollection<CalenderEvent> stackEvents)
+    +Reservation AddEvent(CalenderEvent cEvent)
+    +Reservation RemoveEvent(int index)
+    +int AllLessonCount()
+    +int TotalLessonFee()
 }
+
+
 
 '文章を生成するためのクラス
 package Generator{
@@ -35,7 +34,7 @@ package Generator{
         -readonly string guideFormat
 
         +GuideGenerator(string path)
-        +string GenerateGuideText(ReadOnlyCollection<string> dateItems)
+        +string GenerateGuideText(DateItemGenerator dateItem,Reservation reservation)
     }
 
     'コマごとの項目を生成するクラス
@@ -43,7 +42,7 @@ package Generator{
         -readonly string eventFormat
 
         +DateItemGenerator(string path)
-       +string GenerateDateItemText(CalenderEvent cEvent)
+        +string GenerateDateItemText(CalenderEvent cEvent)
     }
 }
 
@@ -53,7 +52,8 @@ Reservation "1" o-- "1..*" CalenderEvent
 
 CalenderEvent <.. DateItemGenerator
 
-Reservation o-- DateItemGenerator
-Reservation o-- GuideGenerator
+Reservation <.. GuideGenerator
+
+DateItemGenerator --o GuideGenerator
 
 @enduml
