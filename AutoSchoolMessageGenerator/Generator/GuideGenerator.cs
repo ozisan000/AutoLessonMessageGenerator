@@ -21,19 +21,27 @@ namespace AutoSchoolMessageGenerator.Generator
             _dateItemGenerator = itemGenerator;
         }
 
+        /// <summary>
+        /// オンライン授業の案内文章を作成する、その際予約内容を昇順に並び変える
+        /// </summary>
+        /// <param name="reservation"></param>
+        /// <returns></returns>
         public string GenerateGuideText(Reservation reservation)
         {
             string guideText = guideFormat;
 
             //日程のテキストを作成
-           string scheduleText = "";
-            foreach (var calenderEvent in reservation.LessonSchedules.OrderBy(o => o.Date))
+            string scheduleText = "";
+
+            if (reservation.LessonSchedules.Count <= 0) throw new Exception("Schedule does not exist!");
+
+            foreach (var calenderEvent in reservation.LessonSchedules.OrderBy(o => o.StartSchedule))
                 scheduleText += _dateItemGenerator.GenerateDateItemText(calenderEvent) + "\n";
 
-            guideText.Replace(GeneratorTags.LessonScheduleTag, scheduleText);
-            guideText.Replace(GeneratorTags.LessonFeeTag, reservation.LessonFee.ToString());
-            guideText.Replace(GeneratorTags.TotalLessonCountTag, reservation.TotalLessonCount.ToString());
-            guideText.Replace(GeneratorTags.TotalLessonFeeTag, reservation.TotalLessonFee.ToString());
+            guideText = guideText.Replace(GeneratorTags.LessonScheduleTag, scheduleText);
+            guideText = guideText.Replace(GeneratorTags.LessonFeeTag, reservation.LessonFee.ToString());
+            guideText = guideText.Replace(GeneratorTags.TotalLessonCountTag, reservation.TotalLessonCount.ToString());
+            guideText = guideText.Replace(GeneratorTags.TotalLessonFeeTag, reservation.TotalLessonFee.ToString());
             return guideText;
         }
     }

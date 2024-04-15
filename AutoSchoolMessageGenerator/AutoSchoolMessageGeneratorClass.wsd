@@ -3,25 +3,25 @@
 '基底クラスたち
 
 'ロジックイベントクラス
-class CalenderEvent{
+class Schedule{
     +readonly Date date
     +readonly int startTime
     +readonly int endTime
     +readonly int LessonCount
 
-    +CalenderEvent(Date date,int startTime,int endTime)
+    +Schedule(Date date,int startTime,int endTime)
 }
 
 'ロジック予約クラス
 class Reservation{
-    +readonly ReadOnlyCollection<CalenderEvent> StackEvents
+    +readonly ReadOnlyCollection<Schedule> Schedules
     +readonly int LessonFee
 
     +Reservation(int lessonFee)
-    -Reservation(Reservation oldReservation,ReadOnlyCollection<CalenderEvent> stackEvents)
-    +Reservation AddEvent(CalenderEvent cEvent)
+    -Reservation(Reservation oldReservation,ReadOnlyCollection<Schedule> Schedules)
+    +Reservation AddEvent(Schedule schedule)
     +Reservation RemoveEvent(int index)
-    +int AllLessonCount()
+    +int TotalLessonCount()
     +int TotalLessonFee()
 }
 
@@ -32,25 +32,26 @@ package Generator{
     '文章全体を生成するクラス
     class GuideGenerator{
         -readonly string guideFormat
+        -readonly DateItemGenerator _dateItemGenerator
 
-        +GuideGenerator(string path)
-        +string GenerateGuideText(DateItemGenerator dateItem,Reservation reservation)
+        +GuideGenerator(DateItemGenerator dateItem,string path)
+        +string GenerateGuideText(Reservation reservation)
     }
 
     'コマごとの項目を生成するクラス
     class DateItemGenerator{
-        -readonly string eventFormat
+        -readonly string scheduleFormat
 
         +DateItemGenerator(string path)
-        +string GenerateDateItemText(CalenderEvent cEvent)
+        +string GenerateDateItemText(Schedule schedule)
     }
 }
 
 
 
-Reservation "1" o-- "1..*" CalenderEvent
+Reservation "1" o-- "1..*" Schedule
 
-CalenderEvent <.. DateItemGenerator
+Schedule <.. DateItemGenerator
 
 Reservation <.. GuideGenerator
 

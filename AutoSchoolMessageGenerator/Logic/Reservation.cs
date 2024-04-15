@@ -1,4 +1,5 @@
-﻿namespace AutoSchoolMessageGenerator.Logic
+﻿using System.Linq;
+namespace AutoSchoolMessageGenerator.Logic
 {
     public class Reservation
     {
@@ -7,7 +8,7 @@
 
         public int TotalLessonCount => LessonSchedules.Sum(e => e.LessonCount);
 
-        public int TotalLessonFee => LessonSchedules.Sum(e => e.LessonCount) * LessonFee;
+        public int TotalLessonFee => TotalLessonCount * LessonFee;
 
         public Reservation(int lessonFee)
         {
@@ -15,23 +16,23 @@
             LessonSchedules = new List<Schedule>();
         }
 
-        private Reservation(Reservation oldReservation, IReadOnlyList<Schedule> stackEvents)
+        private Reservation(Reservation oldReservation, IReadOnlyList<Schedule> schedules)
         {
-            LessonSchedules = stackEvents;
+            LessonSchedules = schedules;
             this.LessonFee = oldReservation.LessonFee;
         }
 
-        public Reservation AddEvent(Schedule addEvent)
+        public Reservation AddSchedule(Schedule addSchedule)
         {
             List<Schedule> newStackEvent = new List<Schedule>(LessonSchedules)
             {
-                addEvent
+                addSchedule
             };
 
             return new Reservation(this, newStackEvent);
         }
 
-        public Reservation RemoveEvent(int index)
+        public Reservation RemoveSchedule(int index)
         {
             List<Schedule> newStackEvent = new List<Schedule>(LessonSchedules);
             newStackEvent.RemoveAt(index);
