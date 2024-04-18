@@ -2,7 +2,7 @@
 
 namespace AutoSchoolMessageGenerator.Helper
 {
-    internal class GeneratorHelper
+    public class GeneratorHelper
     {
         public static string ReadMarkUpFile(string filePath)
         {
@@ -23,7 +23,7 @@ namespace AutoSchoolMessageGenerator.Helper
         /// <exception cref="Exception"></exception>
         public static void CheckWritingNeedTag(string checkText, string tag)
         {
-            if (!checkText.Contains(tag)) throw new Exception(
+            if (!checkText.Contains(tag)) throw new FormatException(
                 $"Not writing \"{tag}\" tag! \n " +
                 $"---Confrimed Text--- " +
                 $"\n{checkText}");

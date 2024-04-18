@@ -3,7 +3,7 @@ namespace AutoSchoolMessageGenerator.Logic
 {
     public class Reservation
     {
-        public readonly IReadOnlyList<Schedule> LessonSchedules;
+        public readonly IReadOnlyList<DaySchedule> LessonSchedules;
         public readonly int LessonFee;
 
         public int TotalLessonCount => LessonSchedules.Sum(e => e.LessonCount);
@@ -12,19 +12,20 @@ namespace AutoSchoolMessageGenerator.Logic
 
         public Reservation(int lessonFee)
         {
+            if (lessonFee <= 0) throw new ArgumentOutOfRangeException();
             this.LessonFee = lessonFee;
-            LessonSchedules = new List<Schedule>();
+            LessonSchedules = new List<DaySchedule>();
         }
 
-        private Reservation(Reservation oldReservation, IReadOnlyList<Schedule> schedules)
+        private Reservation(Reservation oldReservation, IReadOnlyList<DaySchedule> schedules)
         {
             LessonSchedules = schedules;
             this.LessonFee = oldReservation.LessonFee;
         }
 
-        public Reservation AddSchedule(Schedule addSchedule)
+        public Reservation AddSchedule(DaySchedule addSchedule)
         {
-            List<Schedule> newStackEvent = new List<Schedule>(LessonSchedules)
+            List<DaySchedule> newStackEvent = new List<DaySchedule>(LessonSchedules)
             {
                 addSchedule
             };
@@ -34,7 +35,7 @@ namespace AutoSchoolMessageGenerator.Logic
 
         public Reservation RemoveSchedule(int index)
         {
-            List<Schedule> newStackEvent = new List<Schedule>(LessonSchedules);
+            List<DaySchedule> newStackEvent = new List<DaySchedule>(LessonSchedules);
             newStackEvent.RemoveAt(index);
             return new Reservation(this, newStackEvent);
         }

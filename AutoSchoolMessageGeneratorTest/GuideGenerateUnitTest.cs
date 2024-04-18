@@ -1,84 +1,124 @@
 using Xunit.Abstractions;
-using AutoSchoolMessageGenerator;
 using AutoSchoolMessageGenerator.Logic;
 using AutoSchoolMessageGenerator.Generator;
 
+
 namespace AutoSchoolMessageGeneratorTest
 {
+    using static GuideGenerateTestHelper;
+
     public class GuideGenerateUnitTest
     {
         private readonly ITestOutputHelper _output;
-        private const int testFee = 1650;
+        private const int TestCorrectFee = 100;
+        private const int TestWrongFee = 0;
         private const string testScheduleMarkUpPath = "G:\\Code\\CCharp\\AutoSchoolMessageGenerator\\AutoSchoolMessageGenerator\\TestScheduleMarkUp.txt";
         private const string testGuideMarkUpPath = "G:\\Code\\CCharp\\AutoSchoolMessageGenerator\\AutoSchoolMessageGenerator\\TestGuideMarkUp.txt";
+        private const string TestDummyDirectory = "G:\\Dummy\\a.txt";
+        private const string TestDummyMarkUpPath = "G:\\Code\\CCharp\\AutoSchoolMessageGenerator\\AutoSchoolMessageGenerator\\dummy";
+        private const string TestDummyMarkUpFile = "G:\\Code\\CCharp\\AutoSchoolMessageGenerator\\AutoSchoolMessageGenerator\\DummyMarkUp.txt";
 
-        public GuideGenerateUnitTest (ITestOutputHelper output) {
+        public GuideGenerateUnitTest(ITestOutputHelper output)
+        {
             _output = output;
             _output.WriteLine("------Start {0}------\n", nameof(GuideGenerateUnitTest));
-            Create();
         }
 
         [Fact]
-        public void Create()
+        public void CreateReservation()
         {
-            _output.WriteLine($"---Start Test \"{nameof(Create)}\" Method---\n");
-
-            //クラスのインスタンス化をテスト
-            var testReservation = new Reservation(testFee);
+            //Test instancing class.
+            Reservation testReservation;
+            Assert.Throws<ArgumentOutOfRangeException>(() => testReservation = new Reservation(TestWrongFee));
+            testReservation = new Reservation(TestCorrectFee);
             Assert.NotNull(testReservation);
-            ReservationInfo(testReservation);
+            _output.WriteLine(ReservationInfo(testReservation));
+        }
 
-            //間違ったパスで例外発生することを確認(正しい処理です)
-            var dateItemGenerator = new DateItemGenerator(testScheduleMarkUpPath);
+        [Fact]
+        public void CreateDateItemGenerator()
+        {
+            DateItemGenerator dateItemGenerator;
+            Assert.Throws<ArgumentException>(() => dateItemGenerator = new DateItemGenerator(""));
+            Assert.Throws<DirectoryNotFoundException>(() => dateItemGenerator = new DateItemGenerator(TestDummyDirectory));
+            Assert.Throws<FileNotFoundException>(() => dateItemGenerator = new DateItemGenerator(TestDummyMarkUpPath));
+            Assert.Throws<FormatException>(() => dateItemGenerator = new DateItemGenerator(TestDummyMarkUpFile));
+
+            dateItemGenerator = new DateItemGenerator(testScheduleMarkUpPath);
             Assert.NotNull(dateItemGenerator);
+        }
 
-            //間違ったパスで例外発生することを確認(正しい処理です)
-            var guideGenerator = new GuideGenerator(dateItemGenerator,testGuideMarkUpPath);
+        [Fact]
+        public void CreateGuideGenerator()
+        {
+            DateItemGenerator dateItemGenerator = new DateItemGenerator(testScheduleMarkUpPath);
+
+            GuideGenerator guideGenerator;
+            Assert.Throws<ArgumentException>(() => guideGenerator = new GuideGenerator(dateItemGenerator, ""));
+            Assert.Throws<DirectoryNotFoundException>(() => guideGenerator = new GuideGenerator(dateItemGenerator, TestDummyDirectory));
+            Assert.Throws<FileNotFoundException>(() => guideGenerator = new GuideGenerator(dateItemGenerator, TestDummyMarkUpPath));
+            Assert.Throws<FormatException>(() => guideGenerator = new GuideGenerator(dateItemGenerator, TestDummyMarkUpFile));
+
+            guideGenerator = new GuideGenerator(dateItemGenerator, testGuideMarkUpPath);
             Assert.NotNull(guideGenerator);
+        }
 
-            _output.WriteLine($"\n---End Test \"{nameof(Create)}\" Method---\n\n\n");
+        [Fact]
+        public void CreateSchedule()
+        {
+            var throwYear = (CreateSimpleHour(2024, 1, 1, 1), CreateSimpleHour(1999, 1, 1, 2));
+            var throwMonth = (CreateSimpleHour(2024, 1, 1, 1), CreateSimpleHour(2024, 2, 1, 2));
+            var throwDay = (CreateSimpleHour(2024, 1, 1, 1), CreateSimpleHour(2024, 1, 2, 2));
+            var throwHour = (CreateSimpleHour(2024, 1, 1, 1), CreateSimpleHour(2024, 1, 1, 1));
+            var successData = (CreateSimpleHour(2024, 1, 1, 1), CreateSimpleHour(2024, 1, 1, 2));
+
+            DaySchedule schedule;
+            Action<(DateTime, DateTime)> checkThrowsMacro = (data) =>
+            {
+                Assert.Throws<ArgumentOutOfRangeException>(() => schedule = new DaySchedule(data.Item1, data.Item2));
+            };
+
+            checkThrowsMacro(throwYear);
+            checkThrowsMacro(throwMonth);
+            checkThrowsMacro(throwDay);
+            checkThrowsMacro(throwHour);
+            schedule = new DaySchedule(successData.Item1, successData.Item2);
         }
 
         [Fact]
         public void SimpleScheduleGenerate()
         {
-            _output.WriteLine($"---Start Test \"{nameof(SimpleScheduleGenerate)}\" Method---\n");
-
-            //正しいマークアップファイルのパスが指定されており、正しい金額が渡されている状態
-            var testReservation = new Reservation(testFee);
+            var testReservation = new Reservation(TestCorrectFee);
             var dateItemGenerator = new DateItemGenerator(testScheduleMarkUpPath);
             var guideGenerator = new GuideGenerator(dateItemGenerator, testGuideMarkUpPath);
 
-            //
+            //シンプルな予定（正常なスケジュール）表示するコード
             testReservation = testReservation.AddSchedule(
-                new Schedule(CreateSimpleHour(2024, 4, 1, 20), CreateSimpleHour(2024, 4, 1, 21))
+                new DaySchedule(       //西暦 月 日 時
+                    CreateSimpleHour(year: 2024, month: 4, day: 1, hour: 20),
+                    CreateSimpleHour(year: 2024, month: 4, day: 1, hour: 21))
                 );
             Assert.NotNull(testReservation);
-            ReservationInfo(testReservation);
+            _output.WriteLine(ReservationInfo(testReservation));
 
             //生成テスト
-            OutputGuideMessage(testReservation, guideGenerator);
-
-            _output.WriteLine($"\n---End Test \"{nameof(SimpleScheduleGenerate)}\" Method---\n\n\n");
+            _output.WriteLine(OutputGuideMessage(testReservation, guideGenerator));
         }
 
-        private void ReservationInfo(Reservation reservation)
+        [Theory]
+        [ClassData(typeof(DayOfTheWeekSchedule))]
+        public void WeekScheduleGenerate(List<(DateTime Start, DateTime End)> schedules)
         {
-            _output.WriteLine($"{nameof(reservation.LessonFee)}:{reservation.LessonFee}\n");
-            _output.WriteLine($"{nameof(reservation.TotalLessonCount)}:{reservation.TotalLessonCount}\n");
-            _output.WriteLine($"{nameof(reservation.TotalLessonFee)}:{reservation.TotalLessonFee}\n");
-        }
+            var testReservation = new Reservation(TestCorrectFee);
+            var dateItemGenerator = new DateItemGenerator(testScheduleMarkUpPath);
+            var guideGenerator = new GuideGenerator(dateItemGenerator, testGuideMarkUpPath);
 
-        private void OutputGuideMessage(Reservation reservation,GuideGenerator generator)
-        {
-            //文章作成のテスト
-            string resultText = generator.GenerateGuideText(reservation);
-            _output.WriteLine($"---Output Test Guide Message---\n{resultText}");
-        }
+            //Add Schedule
+            foreach (var schedule in schedules)
+                testReservation = testReservation.AddSchedule(new DaySchedule(schedule.Start, schedule.End));
 
-        private DateTime CreateSimpleHour(int year,int month,int day,int hour)
-        {
-            return new DateTime(year, month, day, hour, 0, 0);
+            _output.WriteLine(ReservationInfo(testReservation));
+            _output.WriteLine(OutputGuideMessage(testReservation, guideGenerator));
         }
     }
 }
