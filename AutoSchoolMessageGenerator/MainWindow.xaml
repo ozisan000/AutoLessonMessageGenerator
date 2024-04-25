@@ -7,18 +7,41 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="560" ResizeMode="NoResize">
     <Grid>
-        <Button x:Name="Add" Content="Add" HorizontalAlignment="Left" Margin="349,48,0,0" VerticalAlignment="Top" Width="67"/>
-        <DatePicker x:Name="datePicker" HorizontalAlignment="Left" Margin="24,46,0,0" VerticalAlignment="Top" Width="135"/>
-        <ComboBox x:Name="startTimeCombo" HorizontalAlignment="Left" Margin="172,47,0,0" VerticalAlignment="Top" Width="45" SelectedIndex="0"/>
-        <ComboBox x:Name="endTimeCombo" HorizontalAlignment="Left" Margin="266,47,0,0" VerticalAlignment="Top" Width="45" SelectedIndex="0"/>
-        <Label x:Name="startTimeLabel" Content="時 ～" HorizontalAlignment="Left" Margin="222,45,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="endTimeLabel" Content="時" HorizontalAlignment="Left" Margin="316,45,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="moneyInputBox" HorizontalAlignment="Left" Margin="432,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" Text="1650"/>
-        <Label x:Name="moneyLabel" Content="円" HorizontalAlignment="Left" Margin="514,45,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="generateButton" Content="よやく&amp;せいせいするぞお" HorizontalAlignment="Center" Margin="0,322,0,0" VerticalAlignment="Top" Height="49" Width="216" FontSize="20"/>
-        <ScrollViewer x:Name="confimViewer" Margin="11,76,10,117">
+        <DockPanel>
+            <Menu Name="Menu" DockPanel.Dock="Top">
+                <MenuItem Header="メニュー1(_A)">
+                    <MenuItem Header="メニュー 1-1"/>
+                    <MenuItem Header="メニュー 1-2"/>
+                    <MenuItem Header="メニュー 1-3">
+                        <MenuItem Header="メニュー 1-3-1"/>
+                        <MenuItem Header="メニュー 1-3-2"/>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+            <StackPanel>
+            </StackPanel>
+        </DockPanel>
+        <Grid Margin="0,18,0,323">
+            <Button x:Name="Add" Content="Add" HorizontalAlignment="Left" Margin="437,50,0,0" VerticalAlignment="Top" Width="67"/>
+            <DatePicker x:Name="startDatePicker" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="136"/>
+            <DatePicker x:Name="endDatePicker" HorizontalAlignment="Left" Margin="107,47,0,0" VerticalAlignment="Top" Width="136"/>
+            <ComboBox x:Name="startHourCombo" HorizontalAlignment="Left" Margin="255,11,0,0" VerticalAlignment="Top" Width="46" SelectedIndex="0"/>
+            <ComboBox x:Name="startMiniteCombo" HorizontalAlignment="Left" Margin="323,11,0,0" VerticalAlignment="Top" Width="46" SelectedIndex="0"/>
+            <ComboBox x:Name="endHourCombo" HorizontalAlignment="Left" Margin="255,48,0,0" VerticalAlignment="Top" Width="46" SelectedIndex="0"/>
+            <ComboBox x:Name="endMiniteCombo" HorizontalAlignment="Left" Margin="323,47,0,0" VerticalAlignment="Top" Width="46" SelectedIndex="0"/>
+            <Label x:Name="startLabel" Content="開始日時" HorizontalAlignment="Left" Margin="34,9,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="endLabel" Content="終了日時" HorizontalAlignment="Left" Margin="34,46,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="moneyInputBox" HorizontalAlignment="Left" Margin="427,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" Text="1650"/>
+            <Label x:Name="moneyLabel" Content="円" HorizontalAlignment="Left" Margin="504,7,0,0" VerticalAlignment="Top"/>
+        </Grid>
+        <ScrollViewer x:Name="confimViewer" Margin="11,128,10,64" Background="#FFEFEFEF">
             <StackPanel x:Name="confimStackPanel">
+                <DockPanel Background="Gainsboro">
+                    <Label x:Name="TestStackLabel" Content=" 00/00 24時～24時 1コマ" Margin="190,0,0,0" FontSize="14" HorizontalAlignment="Center" />
+                    <Button x:Name="TestStackButton" Content="Delete" Width="61" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Margin="0,3,10,3" DockPanel.Dock="Right" />
+                </DockPanel>
             </StackPanel>
         </ScrollViewer>
+        <Button x:Name="generateButton" Content="よやく&amp;せいせいするぞお" HorizontalAlignment="Center" Margin="0,375,0,0" VerticalAlignment="Top" Height="49" Width="216" FontSize="20"/>
     </Grid>
 </Window>

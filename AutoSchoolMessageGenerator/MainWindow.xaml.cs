@@ -19,8 +19,10 @@ namespace AutoSchoolMessageGenerator
         public MainWindow()
         {
             InitializeComponent();
-            CreateTimeCombo(startTimeCombo);
-            CreateTimeCombo(endTimeCombo);
+            CreateTimeCombo(startHourCombo,24);
+            CreateTimeCombo(endHourCombo, 24); 
+            CreateTimeCombo(startMiniteCombo, 60);
+            CreateTimeCombo(endMiniteCombo, 60);
 
 
             for (int i = 0; i <= 100; i++)
@@ -38,10 +40,10 @@ namespace AutoSchoolMessageGenerator
         /// 24時間設定のComboBoxを作成
         /// </summary>
         /// <param name="comboBox"></param>
-        private void CreateTimeCombo(ComboBox comboBox)
+        private void CreateTimeCombo(ComboBox comboBox,int time)
         {
             comboBox.Items.Clear();
-            for (int i = 0; i <= 24; i++)
+            for (int i = 0; i <= time; i++)
             {
                 var timeLabel = new Label();
                 timeLabel.Content = i;
