@@ -3,7 +3,7 @@ using AutoSchoolMessageGenerator.Logic;
 using AutoSchoolMessageGenerator.Generator;
 
 
-namespace AutoSchoolMessageGeneratorTest
+namespace AutoSchoolMessageGeneratorTest.Logic
 {
     using static GuideGenerateTestHelper;
 

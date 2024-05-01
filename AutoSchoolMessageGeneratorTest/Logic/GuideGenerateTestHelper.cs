@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoSchoolMessageGeneratorTest
+namespace AutoSchoolMessageGeneratorTest.Logic
 {
     public class GuideGenerateTestHelper
     {

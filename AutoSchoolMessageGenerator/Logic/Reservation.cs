@@ -17,6 +17,13 @@ namespace AutoSchoolMessageGenerator.Logic
             LessonSchedules = new List<DaySchedule>();
         }
 
+        public Reservation(Reservation oldReservation, int newLessonFee)
+        {
+            if (newLessonFee <= 0) throw new ArgumentOutOfRangeException();
+            LessonSchedules = oldReservation.LessonSchedules;
+            this.LessonFee = newLessonFee;
+        }
+
         private Reservation(Reservation oldReservation, IReadOnlyList<DaySchedule> schedules)
         {
             LessonSchedules = schedules;

@@ -22,10 +22,10 @@ namespace AutoSchoolMessageGenerator.Generator
         public string GenerateDateItemText(DaySchedule schedule)
         {
             string dateItemText = itemFormat;
-            dateItemText = dateItemText.Replace(GeneratorTags.DateTag, schedule.StartSchedule.ToString("MM/dd"));
-            dateItemText = dateItemText.Replace(GeneratorTags.StartTimeTag, schedule.StartSchedule.Hour.ToString());
-            dateItemText = dateItemText.Replace(GeneratorTags.EndTimeTag, schedule.EndSchedule.Hour.ToString());
-            dateItemText = dateItemText.Replace(GeneratorTags.LessonCountTag, schedule.LessonCount.ToString());
+            dateItemText = dateItemText.Replace(GeneratorTags.DateTag,          schedule.StartSchedule.ToString("MM/dd"));
+            dateItemText = dateItemText.Replace(GeneratorTags.StartTimeTag,     schedule.StartSchedule.Hour.ToString());
+            dateItemText = dateItemText.Replace(GeneratorTags.EndTimeTag,       schedule.EndSchedule.Hour.ToString());
+            dateItemText = dateItemText.Replace(GeneratorTags.LessonCountTag,   schedule.LessonCount.ToString());
             return dateItemText;
         }
     }
