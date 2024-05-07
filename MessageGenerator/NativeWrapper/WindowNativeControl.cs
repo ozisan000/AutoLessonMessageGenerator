@@ -1,17 +1,16 @@
 ﻿using Microsoft.UI.Windowing;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.Linq;
 using Windows.Graphics;
-using System.Collections;
+using static Native.NativeMethods;
 
-namespace MessageGenerator
+namespace Native
 {
     public class WindowNativeControl
     {
-        private NativeMethods.WinProc _newWndProc = null;
+        private WinProc _newWndProc = null;
         private IntPtr _oldWndProc = IntPtr.Zero;
-
         private readonly Dictionary<int, INativeEvent> _checkEvents = new Dictionary<int, INativeEvent>();
 
         public WindowNativeControl(object hwnd)
@@ -20,6 +19,12 @@ namespace MessageGenerator
             InitWindowProc(hwnd);
         }
 
+        /// <summary>
+        /// 初期ウィンドウサイズを設定しプロシージャをフックする
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="craeteSize"></param>
+        /// <param name="isResizable"></param>
         public WindowNativeControl(object hwnd, SizeInt32 craeteSize, bool isResizable = true)
         {
             var intPtrhwnd = InitWindowProc(hwnd);
@@ -45,8 +50,11 @@ namespace MessageGenerator
             // ウインドウのハンドルを取ってくる
             var intPtrhwnd = WinRT.Interop.WindowNative.GetWindowHandle(hwnd);
 
-            _newWndProc = new NativeMethods.WinProc(NewWindowProc);
-            _oldWndProc = NativeMethods.SetWindowLongPtr64(intPtrhwnd, NativeMethods.GWL_WNDPROC, _newWndProc);
+            _newWndProc = new WinProc(NewWindowProc);
+            _oldWndProc = SetWindowLongPtr64(
+                intPtrhwnd,
+                GWL_WNDPROC, 
+                _newWndProc);
             return intPtrhwnd;
         }
 
@@ -60,12 +68,11 @@ namespace MessageGenerator
         /// <returns></returns>
         private IntPtr NewWindowProc(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam)
         {
-            foreach (var checkEvent in _checkEvents)
-            {
-                if (checkEvent.Key == Msg) checkEvent.Value.InvokeEvent(hWnd, wParam, lParam);
-            }
+            INativeEvent pickUpEvent = _checkEvents.FirstOrDefault(check => check.Key == Msg).Value;
+            if (pickUpEvent != null)
+                pickUpEvent.InvokeEvent(hWnd, wParam, lParam);
             // WM_GETMINMAXINFO以外の、自分で処理したくないMsgは、もとのWndProcに任せる
-            return NativeMethods.CallWindowProc(_oldWndProc, hWnd, Msg, wParam, lParam);
+            return CallWindowProc(_oldWndProc, hWnd, Msg, wParam, lParam);
         }
     }
 }

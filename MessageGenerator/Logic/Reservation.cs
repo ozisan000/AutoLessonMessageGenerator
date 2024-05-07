@@ -1,4 +1,7 @@
 ﻿using System.Linq;
+using System;
+using System.Collections.Generic;
+
 namespace MessageGenerator.Logic
 {
     public class Reservation
@@ -12,14 +15,14 @@ namespace MessageGenerator.Logic
 
         public Reservation(int lessonFee)
         {
-            if (lessonFee <= 0) throw new ArgumentOutOfRangeException();
+            if (lessonFee < 0) throw new ArgumentOutOfRangeException();
             this.LessonFee = lessonFee;
             LessonSchedules = new List<DaySchedule>();
         }
 
         public Reservation(Reservation oldReservation, int newLessonFee)
         {
-            if (newLessonFee <= 0) throw new ArgumentOutOfRangeException();
+            if (newLessonFee < 0) throw new ArgumentOutOfRangeException();
             LessonSchedules = oldReservation.LessonSchedules;
             this.LessonFee = newLessonFee;
         }

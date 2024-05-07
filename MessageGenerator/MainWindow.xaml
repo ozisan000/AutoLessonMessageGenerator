@@ -18,14 +18,13 @@
             <TimePicker x:Name="endTimePicker"  ClockIdentifier="24HourClock" Header="終了時間"/>
             <StackPanel Orientation="Horizontal" Spacing = "10" >
                 <TextBlock x:Name="lessonFeeLabel" Text="授業料" VerticalAlignment="Center"/>
-                <NumberBox x:Name="moneyInputBox" MaxWidth="70" Minimum="0" Text="1650" PlaceholderText="授業料"/>
+                <NumberBox x:Name="moneyInputBox" MaxWidth="70" Minimum="0" Text="0" PlaceholderText="授業料"/>
                 <TextBlock x:Name="moneyLabel" Text="円" VerticalAlignment="Center"/>
             </StackPanel>
             <Button x:Name="addButton" Content="Add" Width="200"/>
         </StackPanel>
-        <ScrollViewer x:Name="confimViewer" Margin="270,20,10,64" HorizontalAlignment="Stretch" Background="DarkSlateGray">
+        <ScrollViewer x:Name="confimViewer" Margin="270,20,10,64" HorizontalAlignment="Stretch" Background="{ThemeResource LayerOnAccentAcrylicFillColorDefault}" CornerRadius="5">
             <StackPanel x:Name="scheduleStackPanel">
-                <Button/>
                 <!--<local:ScheduleControl/>-->
             </StackPanel>
         </ScrollViewer>

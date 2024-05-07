@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace AutoSchoolMessageGenerator.View
+namespace MessageGenerator.View
 {
     internal class TimeCombo
     {

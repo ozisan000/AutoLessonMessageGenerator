@@ -1,6 +1,6 @@
 using Xunit.Abstractions;
-using AutoSchoolMessageGenerator.Logic;
-using AutoSchoolMessageGenerator.Generator;
+using MessageGenerator.Logic;
+using MessageGenerator.Generator;
 
 
 namespace AutoSchoolMessageGeneratorTest.Logic

@@ -1,5 +1,6 @@
 ﻿using MessageGenerator.Helper;
 using MessageGenerator.Logic;
+using System.Linq;
 
 namespace MessageGenerator.Generator
 {
@@ -32,9 +33,6 @@ namespace MessageGenerator.Generator
 
             //日程のテキストを作成
             string scheduleText = "";
-
-            //ここで例外吐くのは危険...？
-            //if (reservation.LessonSchedules.Count <= 0) throw new Exception("Schedule does not exist!");
 
             foreach (var calenderEvent in reservation.LessonSchedules.OrderBy(o => o.StartSchedule))
                 scheduleText += _dateItemGenerator.GenerateDateItemText(calenderEvent) + "\n";

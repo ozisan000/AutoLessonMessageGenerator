@@ -1,12 +1,12 @@
-﻿using AutoSchoolMessageGenerator.Controller;
-using AutoSchoolMessageGenerator.Logic;
-using AutoSchoolMessageGenerator.View;
+﻿using MessageGenerator.Controller;
+using MessageGenerator.Logic;
+using MessageGenerator.View;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Linq;
 
-namespace AutoSchoolMessageGenerator
+namespace MessageGenerator
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

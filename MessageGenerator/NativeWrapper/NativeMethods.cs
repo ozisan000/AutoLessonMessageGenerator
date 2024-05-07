@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MessageGenerator
+namespace Native
 {
-    public class NativeMethods
+    public static class NativeMethods
     {
         public const int BASE_DPI = 96; //Windowsでは100%解像度では96DPIが基準となっている
         public const int WM_GETMINMAXINFO = 0x0024;
@@ -13,8 +17,8 @@ namespace MessageGenerator
         [StructLayout(LayoutKind.Sequential)]
         public struct POINT
         {
-            public System.Int32 x;
-            public System.Int32 y;
+            public int x;
+            public int y;
         }
 
         //構造体をメンバに持つ場合はStructLayoutでフィールドをメモリ上でどのようにレイアウト、すなわち
@@ -41,21 +45,5 @@ namespace MessageGenerator
         public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
         [DllImport("user32.dll")]
         public static extern int GetDpiForWindow(IntPtr hwnd);
-
-
-        //
-        public static void SetWindowMinSize(IntPtr hWnd, IntPtr lParam, POINT minSize)
-        {
-            // ウインドウのサイズが変わるたびにここを通る
-            var dpi = GetDpiForWindow(hWnd);
-            float scalingFactor = (float)dpi / BASE_DPI;
-
-            // ここで、最上の大きさをMINMAXINFOに入れて指定する
-            MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-            minMaxInfo.ptMinTrackSize.x = (int)(minSize.x * scalingFactor);
-            minMaxInfo.ptMinTrackSize.y = (int)(minSize.y * scalingFactor);
-            Marshal.StructureToPtr(minMaxInfo, lParam, true);
-        }
     }
 }
-

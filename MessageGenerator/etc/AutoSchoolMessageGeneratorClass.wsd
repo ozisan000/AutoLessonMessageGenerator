@@ -1,0 +1,60 @@
+@startuml AutoGeneratorSchoolMessageGenerator
+
+'基底クラスたち
+
+'ロジックイベントクラス
+class Schedule{
+    +readonly Date date
+    +readonly int startTime
+    +readonly int endTime
+    +readonly int LessonCount
+
+    +Schedule(Date date,int startTime,int endTime)
+}
+
+'ロジック予約クラス
+class Reservation{
+    +readonly ReadOnlyCollection<Schedule> Schedules
+    +readonly int LessonFee
+
+    +Reservation(int lessonFee)
+    -Reservation(Reservation oldReservation,ReadOnlyCollection<Schedule> Schedules)
+    +Reservation AddEvent(Schedule schedule)
+    +Reservation RemoveEvent(int index)
+    +int TotalLessonCount()
+    +int TotalLessonFee()
+}
+
+
+
+'文章を生成するためのクラス
+package Generator{
+    '文章全体を生成するクラス
+    class GuideGenerator{
+        -readonly string guideFormat
+        -readonly DateItemGenerator _dateItemGenerator
+
+        +GuideGenerator(DateItemGenerator dateItem,string path)
+        +string GenerateGuideText(Reservation reservation)
+    }
+
+    'コマごとの項目を生成するクラス
+    class DateItemGenerator{
+        -readonly string scheduleFormat
+
+        +DateItemGenerator(string path)
+        +string GenerateDateItemText(Schedule schedule)
+    }
+}
+
+
+
+Reservation "1" o-- "1..*" Schedule
+
+Schedule <.. DateItemGenerator
+
+Reservation <.. GuideGenerator
+
+DateItemGenerator --o GuideGenerator
+
+@enduml

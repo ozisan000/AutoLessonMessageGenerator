@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace AutoSchoolMessageGenerator
+namespace MessageGenerator
 {
     /// <summary>
     /// Interaction logic for App.xaml

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="MessageGenerator.ScheduleControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MessageGenerator"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <!--LayerOnAcrylicFillColorDefaultBrush-->
+    <!--LayerOnAccentAcrylicFillColorDefaultBrush-->
+    <Grid x:Name="scheduleElement">
+        <!--00/00 24時 ～ 00/00 24時 1コマ-->
+        <RichTextBlock HorizontalAlignment="Left" Margin="15" VerticalAlignment="Center">
+            <Paragraph TextAlignment="Left">
+                <Run x:Name="scheduleLabel" FontSize="16">00/00 24時 ～ 00/00 24時 1コマ</Run>
+            </Paragraph>
+        </RichTextBlock>
+        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Margin="15" Height="25" Width="45">
+            <SymbolIcon Symbol="More"/>
+            <Button.Flyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem  x:Name="scheduleDeleteButton" Text="Delete"/>
+                </MenuFlyout>
+            </Button.Flyout>
+            
+        </Button>
+    </Grid>
+</UserControl>

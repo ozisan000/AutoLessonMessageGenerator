@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace MessageGenerator.View
 {
@@ -18,11 +14,18 @@ namespace MessageGenerator.View
         {
             for (int i = 0; i <= num; i++)
             {
-                var timeLabel = new Label();
-                timeLabel.Content = i.ToString(format);
+                var timeLabel = new TextBlock();
+                timeLabel.Text = i.ToString(format);
                 comboBox.Items.Add(timeLabel);
             }
             comboBox.SelectedIndex = 0;
+        }
+
+        public static void CopyTextClipBoard(string generated)
+        {
+            var package = new DataPackage();
+            package.SetText(generated);
+            Clipboard.SetContent(package);
         }
     }
 }

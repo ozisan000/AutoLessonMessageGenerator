@@ -1,4 +1,4 @@
-﻿using AutoSchoolMessageGenerator;
+﻿using MessageGenerator;
 using AutoSchoolMessageGeneratorTest.Logic;
 using Microsoft.VisualStudio.TestPlatform.Utilities;
 using System;

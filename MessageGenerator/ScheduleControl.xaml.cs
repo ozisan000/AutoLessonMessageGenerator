@@ -1,35 +1,27 @@
-﻿using System;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Linq;
+using Microsoft.UI.Xaml.Media;
+
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace MessageGenerator
 {
-    /// <summary>
-    /// Interaction logic for ScheduleControl.xaml
-    /// </summary>
-    public partial class ScheduleControl : UserControl
+    public sealed partial class ScheduleControl : UserControl
     {
         public event EventHandler<RoutedEventArgs>? ClickDeleteButton;
-        private readonly IList _controlList;
+        private readonly IList<UIElement> _controlList;
+        public Grid ScheduleElement => scheduleElement;
 
-        public ScheduleControl(IList controlList, string scheduleText)
+        public ScheduleControl(IList<UIElement> controlList, string scheduleText)
         {
             InitializeComponent();
             _controlList = controlList;
-            scheduleLabel.Content = scheduleText;
+            scheduleLabel.Text = scheduleText;
             scheduleDeleteButton.Click += Click_DeleteButton;
         }
 

@@ -1,11 +1,9 @@
 ﻿using MessageGenerator.Generator;
 using MessageGenerator.Logic;
+using MessageGenerator.View;
+using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace MessageGenerator.Controller
 {
@@ -20,7 +18,7 @@ namespace MessageGenerator.Controller
 
         public ReservationController()
         {
-            _reservation = new Reservation(1650);
+            _reservation = new Reservation(0);
 
             //TestCode
             _dateItemGenerator = new(testScheduleMarkUpPath);
@@ -39,20 +37,19 @@ namespace MessageGenerator.Controller
             _reservation = _reservation.RemoveSchedule(index);
         }
 
-        public void UpdateLessonFee(object? sender, UpdateFeeEventArgs e)
+        public void UpdateLessonFee(object? sender, NumberBoxValueChangedEventArgs e)
         {
-            _reservation = new Reservation(_reservation, e.NewLessonFee);
+            _reservation = new Reservation(_reservation, (int)e.NewValue);
         }
 
         /// <summary>
-        /// メッセージを生成し、クリップボードにコピーする
+        /// メッセージを生成し、クリップボードにコピーする、生成に失敗した場合nullを返す
         /// </summary>
         /// <returns></returns>
         public string GenerateGuideMessage()
         {
-            string generated = _guideGenerator.GenerateGuideText(_reservation);
-            Clipboard.SetData(DataFormats.UnicodeText, generated);
-            return generated;
+            if (_reservation.LessonSchedules.Count <= 0) return null;
+            return _guideGenerator.GenerateGuideText(_reservation);
         }
     }
 }

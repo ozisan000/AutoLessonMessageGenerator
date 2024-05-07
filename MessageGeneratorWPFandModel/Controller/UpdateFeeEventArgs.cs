@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoSchoolMessageGenerator.Controller
+namespace MessageGenerator.Controller
 {
     internal class UpdateFeeEventArgs:EventArgs
     {
