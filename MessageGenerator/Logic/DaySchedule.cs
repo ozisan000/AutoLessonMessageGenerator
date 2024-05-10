@@ -9,7 +9,7 @@ namespace MessageGenerator.Logic
         public readonly DateTime EndSchedule;
         public const int OneHour = 60;
 
-        public DaySchedule(DateTime start, DateTime end,float lessonCountHour = 1.0f)
+        public DaySchedule(DateTime start, DateTime end,float lessonCountHourRate = 1.0f)
         {
             //if (start < DateTime.Now) throw new ArgumentOutOfRangeException();
             if (start.Year != end.Year) throw new ArgumentOutOfRangeException();
@@ -18,7 +18,7 @@ namespace MessageGenerator.Logic
 
             int timeDifference = (end.Hour * OneHour + end.Minute) - (start.Hour * OneHour + start.Minute);
             float lessonHour = (float)timeDifference / (float)OneHour;
-            if (lessonHour < lessonCountHour) throw new ArgumentOutOfRangeException();
+            if (lessonHour < lessonCountHourRate) throw new ArgumentOutOfRangeException();
             int lessonCount = (int)Math.Ceiling(lessonHour);
             if (lessonCount < 1) throw new ArgumentOutOfRangeException();
 

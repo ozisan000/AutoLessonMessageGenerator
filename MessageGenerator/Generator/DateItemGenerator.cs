@@ -9,7 +9,7 @@ namespace MessageGenerator.Generator
 
         public DateItemGenerator(string filePath)
         {
-            string checkFormat = GeneratorHelper.ReadMarkUpFile(filePath);
+            string checkFormat = GeneratorHelper.ReadOrCreateMarkUpFile(filePath);
 
             GeneratorHelper.CheckWritingNeedTag(checkFormat, GeneratorTags.DateTag);
             GeneratorHelper.CheckWritingNeedTag(checkFormat, GeneratorTags.StartHourTag);

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<guide>
+  <title>オンライン授業のご案内</title>
+  <schedules></schedules>
+  <text>参加 Zoom ミーティング</text>
+  <zoomURL>hogehoge.com</zoomURL>
+  <text>ミーティング ID: <zoomID>hogeid</zoomID></text>
+  <text>パスコード: <zoomPass>hogepass</zoomPass></text>
+  <title>お支払いのご案内</title>
+  <schedules></schedules>
+  <text>1コマ:<lessonFee/>円(税込み,Zoom管理費用込み)</text>
+  <text>合計 <totalLessonFee/>コマ <totalLessonCount/>円(税込み)</text>
+  <title2>PapPay送金機能を利用したお支払い</title2>
+  <text>下記のURLよりご送金よろしくお願いします↓</text>
+  <text><payURL>testhogehogepay.com</payURL></text>
+  <title2>銀行口座へのお支払い</title2>
+  <bankInfo>
+    hogehoge
+  </bankInfo>
+</guide>

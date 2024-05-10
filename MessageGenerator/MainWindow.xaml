@@ -18,7 +18,7 @@
             <TimePicker x:Name="endTimePicker"  ClockIdentifier="24HourClock" Header="終了時間"/>
             <StackPanel Orientation="Horizontal" Spacing = "10" >
                 <TextBlock x:Name="lessonFeeLabel" Text="授業料" VerticalAlignment="Center"/>
-                <NumberBox x:Name="moneyInputBox" MaxWidth="70" Minimum="0" Text="0" PlaceholderText="授業料"/>
+                <NumberBox x:Name="feeInputBox" MaxWidth="70" Minimum="0" Text="0" PlaceholderText="授業料"/>
                 <TextBlock x:Name="moneyLabel" Text="円" VerticalAlignment="Center"/>
             </StackPanel>
             <Button x:Name="addButton" Content="Add" Width="200"/>

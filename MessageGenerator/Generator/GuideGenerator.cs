@@ -11,7 +11,7 @@ namespace MessageGenerator.Generator
 
         public GuideGenerator(DateItemGenerator itemGenerator, string filePath)
         {
-            string checkFormat = GeneratorHelper.ReadMarkUpFile(filePath);
+            string checkFormat = GeneratorHelper.ReadOrCreateMarkUpFile(filePath);
 
             GeneratorHelper.CheckWritingNeedTag(checkFormat, GeneratorTags.LessonScheduleTag);
             GeneratorHelper.CheckWritingNeedTag(checkFormat, GeneratorTags.LessonFeeTag);

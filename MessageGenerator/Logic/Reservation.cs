@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace MessageGenerator.Logic
 {
@@ -17,7 +19,7 @@ namespace MessageGenerator.Logic
         {
             if (lessonFee < 0) throw new ArgumentOutOfRangeException();
             this.LessonFee = lessonFee;
-            LessonSchedules = new List<DaySchedule>();
+            LessonSchedules = new ObservableCollection<DaySchedule>();
         }
 
         public Reservation(Reservation oldReservation, int newLessonFee)
@@ -37,20 +39,25 @@ namespace MessageGenerator.Logic
         {
             if (ScheduleHelper.ForSimilaritySchedule(LessonSchedules, addSchedule))
                 throw new ArgumentException();
-
-            List<DaySchedule> newStackEvent = new List<DaySchedule>(LessonSchedules)
+            List<DaySchedule> newSchedules = new List<DaySchedule>(LessonSchedules)
             {
                 addSchedule
             };
-
-            return new Reservation(this, newStackEvent);
+            return new Reservation(this, newSchedules);
         }
 
-        public Reservation RemoveSchedule(int index)
+        public Reservation RemoveScheduleAt(int index)
         {
-            List<DaySchedule> newStackEvent = new List<DaySchedule>(LessonSchedules);
-            newStackEvent.RemoveAt(index);
-            return new Reservation(this, newStackEvent);
+            List<DaySchedule> newSchedules = new List<DaySchedule>(LessonSchedules);
+            newSchedules.RemoveAt(index);
+            return new Reservation(this, newSchedules);
+        }
+
+        public Reservation RemoveSchedule(DaySchedule removeSchedule)
+        {
+            List<DaySchedule> newSchedules = new List<DaySchedule>(LessonSchedules);
+            newSchedules.Remove(removeSchedule);
+            return new Reservation(this, newSchedules);
         }
     }
 }

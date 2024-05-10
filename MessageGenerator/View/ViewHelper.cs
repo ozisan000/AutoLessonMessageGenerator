@@ -1,5 +1,7 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using MessageGenerator.Configuration;
+using Microsoft.UI.Xaml.Controls;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Graphics;
 
 namespace MessageGenerator.View
 {
@@ -27,5 +29,19 @@ namespace MessageGenerator.View
             package.SetText(generated);
             Clipboard.SetContent(package);
         }
+
+        public static SizeInt32 GetWindowSizeConfig(string keyword)
+        {
+            var size = new SizeInt32();
+            size.Width = ConfigHelper.GetConfigValue<int>(keyword + WidthKeyWord);
+            size.Height = ConfigHelper.GetConfigValue<int>(keyword + HeightKeyWord);
+            return size;
+        }
+
+        public const string MinKeyWord = "Min";
+        public const string MaxKeyWord = "Max";
+        public const string CreateKeyWord = "Create";
+        public const string WidthKeyWord = "Width";
+        public const string HeightKeyWord = "Height";
     }
 }

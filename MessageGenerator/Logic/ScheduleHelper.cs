@@ -9,12 +9,6 @@ namespace MessageGenerator.Logic
 {
     public class ScheduleHelper
     {
-        public static DaySchedule CreateSchedule(DateTime start,int endHour,int endMinites)
-        {
-            var end = new DateTime(start.Year, start.Month, start.Day, endHour, endMinites, 0);
-            return new DaySchedule(start, end);
-        }
-
         public static bool ForSimilaritySchedule(IEnumerable<DaySchedule> schedules, DaySchedule checkSchedule)
         {
             if (schedules.Count() <= 0) return false;
@@ -31,15 +25,6 @@ namespace MessageGenerator.Logic
             };
 
             return !schedules.Any(schedule => BeSchedule(schedule));
-        }
-
-        public static bool EqualOverlapOfLine(Vector2 s1, Vector2 s2)
-        {
-
-            float S1 = (s1.X - s2.X) * (s1.Y - s2.Y);
-            float S2 = (s1.X - s2.X) * (s1.Y - s2.Y);
-            if ((S1 > 0 && S2 < 0) || (S1 < 0 && S2 < 0)) return true;
-            return false;
         }
     }
 }

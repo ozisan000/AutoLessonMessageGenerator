@@ -21,6 +21,7 @@ using Microsoft.UI.System;
 using Windows.UI;
 using Microsoft.UI;
 using Windows.ApplicationModel.DataTransfer;
+using MessageGenerator.Configuration;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,14 +33,29 @@ namespace MessageGenerator
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        private ReservationController _controller;
-        private DateTimePicker _startPicker;
-        private DateTimePicker _endPicker;
-        private GenerateControl _generateControl;
-        private WindowNativeControl _nativeControl;
-        private SizeInt32 minSize = new(700, 400);
-        private SizeInt32 createSize = new(800, 500);
-        private SizeInt32 maxSize = new(900, 2000);
+        public event TypedEventHandler<NumberBox, NumberBoxValueChangedEventArgs> ChangedLessonFee
+        {
+            add
+            {
+                feeInputBox.ValueChanged += value;
+            }
+            remove
+            {
+                feeInputBox.ValueChanged -= value;
+            }
+        }
+
+        public event Func<string> GeneratedMessage;
+
+        public event Func<DateTime, DateTime, string> AddedShecule;
+
+        public event Action<int> RemovedAtSchedule;
+
+        private readonly DateTimePicker _startPicker;
+        private readonly DateTimePicker _endPicker;
+        private readonly GenerateControl _generateControl;
+        private readonly ScheduleControlList _scheduleControlList;
+        private readonly WindowNativeControl _nativeControl;
 
         public MainWindow()
         {
@@ -47,62 +63,39 @@ namespace MessageGenerator
 
             _nativeControl = NativeControlFactory.CreateWindowNativeControl(
                 this,
-                createSize,
-                minSize,
-                maxSize
+                ViewHelper.GetWindowSizeConfig(ViewHelper.CreateKeyWord),
+                ViewHelper.GetWindowSizeConfig(ViewHelper.MinKeyWord),
+                ViewHelper.GetWindowSizeConfig(ViewHelper.MaxKeyWord)
                 );
-
-            _controller = new ReservationController();
 
             _startPicker = new DateTimePicker(startDatePicker, startTimePicker);
             _endPicker = new DateTimePicker(startDatePicker, endTimePicker);
             _generateControl = new GenerateControl();
+            _scheduleControlList = new ScheduleControlList(scheduleStackPanel, Application.Current.Resources, true);
 
-            moneyInputBox.ValueChanged += _controller.UpdateLessonFee;
-            addButton.Click += ClickAddButton;
+            addButton.Click += ClickAddScheduleButton;
             generateButton.Click += ClickGenerateButton;
         }
 
-        private void AddScheduleView(string scheduleText)
+        private void ClickAddScheduleButton(object s, RoutedEventArgs e)
         {
-            ScheduleControl control = new ScheduleControl(scheduleStackPanel.Children, scheduleText);
-            control.ClickDeleteButton += (s, a) => ClickDeleteButton(control);
-            scheduleStackPanel.Children.Add(control);
-            ReDrawScheduleBackground();
+            string scheduleText = AddedShecule?.Invoke(_startPicker.GetDateTime(), _endPicker.GetDateTime());
+
+            var control = new ScheduleControl(scheduleText);
+            control.ClickDeleteButton += (s, a) => ClickRemoveScheduleButton(control);
+            _scheduleControlList.AddScheduleControl(control);
         }
 
-        private void ClickAddButton(object s, RoutedEventArgs e)
+        private void ClickRemoveScheduleButton(ScheduleControl deleteSchedule)
         {
-            string scheduleText = _controller.AddSchedule(_startPicker.GetDateTime(), _endPicker.GetDateTime());
-            AddScheduleView(scheduleText);
-        }
-
-        private void ClickDeleteButton(ScheduleControl deleteSchedule)
-        {
-            int deleteIndex = deleteSchedule.CheckThisIndex();
-            _controller.RemoveSchedule(deleteIndex);
-            scheduleStackPanel.Children.RemoveAt(deleteIndex);
-            ReDrawScheduleBackground();
+            int deleteIndex = _scheduleControlList.RemoveScheduleControl(deleteSchedule);
+            RemovedAtSchedule?.Invoke(deleteIndex);
         }
 
         private void ClickGenerateButton(object s, RoutedEventArgs e)
         {
-            string generated = _controller.GenerateGuideMessage();
-            if (generated == null) return;
-            _generateControl.ShowGenerateDialogAsync(this.Content.XamlRoot,generated);
-        }
-
-        //HelperMethod
-        private void ReDrawScheduleBackground()
-        {
-            for (int i = 0; i < scheduleStackPanel.Children.Count; i++)
-            {
-                var control = (ScheduleControl)scheduleStackPanel.Children[i];
-                if (i % 2 == 0)
-                    control.ScheduleElement.Background = (SolidColorBrush)Application.Current.Resources["LayerOnAcrylicFillColorDefaultBrush"];
-                else
-                    control.ScheduleElement.Background = (SolidColorBrush)Application.Current.Resources["DesktopAcrylicTransparentBrush"];
-            }
+            string generated = GeneratedMessage?.Invoke();
+            _generateControl.ShowGenerateDialogAsync(this.Content.XamlRoot, generated);
         }
     }
 }

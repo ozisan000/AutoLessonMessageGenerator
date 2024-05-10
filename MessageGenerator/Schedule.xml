@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<schedule>
+  <date apendedAfter =" "/>
+  <startHour apendedAfter ="時"/>
+  <startMinites apendedAfter ="分～"/>
+  <endHour apendedAfter ="時"/>
+  <endMinites apendedAfter ="分 "/>
+  <lessonCount apendedAfter ="コマ"/>
+</schedule>

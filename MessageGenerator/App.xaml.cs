@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using MessageGenerator.Controller;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -41,10 +42,13 @@ namespace MessageGenerator
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
+            var mainWindow = new MainWindow();
+            _controller = new ReservationController(mainWindow);
+            m_window = mainWindow;
             m_window.Activate();
         }
 
         private Window m_window;
+        private ReservationController _controller;
     }
 }
