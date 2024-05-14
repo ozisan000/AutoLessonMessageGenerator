@@ -1,5 +1,6 @@
 ﻿using MessageGenerator.Helper;
 using MessageGenerator.Logic;
+using System.Xml;
 
 namespace MessageGenerator.Generator
 {
@@ -10,6 +11,9 @@ namespace MessageGenerator.Generator
         public DateItemGenerator(string filePath)
         {
             string checkFormat = GeneratorHelper.ReadOrCreateMarkUpFile(filePath);
+            var doc = new XmlDocument();
+            doc.Load(filePath);
+
 
             GeneratorHelper.CheckWritingNeedTag(checkFormat, GeneratorTags.DateTag);
             GeneratorHelper.CheckWritingNeedTag(checkFormat, GeneratorTags.StartHourTag);
