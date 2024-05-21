@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using System.Xml.Serialization;
+﻿using System.Xml.Linq;
 
 namespace MessageGenerator.Generator.Xml
 {
-    public class XmlLine : IXmlText
+    public class XmlLine : ITextGenXmlElement
     {
-        private readonly IReadOnlyList<IXmlText> _lineElements;
+        private readonly IReadOnlyList<ITextGenXmlElement> _lineElements;
 
         public string Key => "line";
         private const string NewLine = "\n";
 
-        public XmlLine(IReadOnlyList<IXmlText> lineElements)
+        public XmlLine(IReadOnlyList<ITextGenXmlElement> lineElements)
         {
             _lineElements = lineElements;
         }
@@ -25,7 +19,7 @@ namespace MessageGenerator.Generator.Xml
             string result = "";
             foreach (var item in element.Elements())
             {
-                IXmlText lineElement = _lineElements.FirstOrDefault(X => X.Key == item.Name);
+                ITextGenXmlElement? lineElement = _lineElements.FirstOrDefault(X => X.Key == item.Name);
                 if (lineElement == null) continue;
                 result += lineElement.GenerateText(item);
             }

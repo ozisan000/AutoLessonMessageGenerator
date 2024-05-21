@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace MessageGenerator.Generator.Xml
 {
-    public class XmlText : IXmlText
+    public class XmlText : ITextGenXmlElement
     {
         public string Key => "t";
 
