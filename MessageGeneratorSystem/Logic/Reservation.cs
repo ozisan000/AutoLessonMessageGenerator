@@ -1,8 +1,4 @@
-﻿using System.Linq;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Reflection;
+﻿using System.Collections.ObjectModel;
 
 namespace MessageGenerator.Logic
 {
@@ -37,7 +33,7 @@ namespace MessageGenerator.Logic
 
         public Reservation AddSchedule(DaySchedule addSchedule)
         {
-            if (ScheduleHelper.ForSimilaritySchedule(LessonSchedules, addSchedule))
+            if (ForSimilaritySchedule(LessonSchedules, addSchedule))
                 throw new ArgumentException();
             List<DaySchedule> newSchedules = new List<DaySchedule>(LessonSchedules)
             {
@@ -58,6 +54,24 @@ namespace MessageGenerator.Logic
             List<DaySchedule> newSchedules = new List<DaySchedule>(LessonSchedules);
             newSchedules.Remove(removeSchedule);
             return new Reservation(this, newSchedules);
+        }
+
+        public static bool ForSimilaritySchedule(IEnumerable<DaySchedule> schedules, DaySchedule checkSchedule)
+        {
+            if (schedules.Count() <= 0) return false;
+            var BeSchedule = (DaySchedule schedule) =>
+            {
+                DateTime oriStart = schedule.StartSchedule;
+                DateTime oriEnd = schedule.EndSchedule;
+                DateTime checkStart = checkSchedule.StartSchedule;
+                DateTime checkEnd = checkSchedule.EndSchedule;
+
+
+                return (checkStart < oriStart && checkEnd <= oriStart) ||
+                (oriEnd <= checkStart && oriEnd < checkEnd);
+            };
+
+            return !schedules.Any(schedule => BeSchedule(schedule));
         }
     }
 }

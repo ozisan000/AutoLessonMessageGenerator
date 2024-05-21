@@ -7,7 +7,8 @@ namespace MessageGenerator.Logic
         public readonly int LessonCount;
         public readonly DateTime StartSchedule;
         public readonly DateTime EndSchedule;
-        public const int OneHour = 60;
+        public const int HourToMin = 60;
+        private const int MinLessonCount = 1;
 
         public DaySchedule(DateTime start, DateTime end,float lessonCountHourRate = 1.0f)
         {
@@ -16,15 +17,20 @@ namespace MessageGenerator.Logic
             if (start.Month != end.Month) throw new ArgumentOutOfRangeException();
             if (start.Day != end.Day) throw new ArgumentOutOfRangeException();
 
-            int timeDifference = (end.Hour * OneHour + end.Minute) - (start.Hour * OneHour + start.Minute);
-            float lessonHour = (float)timeDifference / (float)OneHour;
+            int timeDifference = ConvertHourToMinite(end) - ConvertHourToMinite(start);
+            float lessonHour = (float)timeDifference / (float)HourToMin;
             if (lessonHour < lessonCountHourRate) throw new ArgumentOutOfRangeException();
             int lessonCount = (int)Math.Ceiling(lessonHour);
-            if (lessonCount < 1) throw new ArgumentOutOfRangeException();
+            if (lessonCount < MinLessonCount) throw new ArgumentOutOfRangeException();
 
             this.StartSchedule = start;
             this.EndSchedule = end;
             this.LessonCount = lessonCount;
+        }
+
+        public static int ConvertHourToMinite(DateTime time)
+        {
+            return time.Hour * HourToMin + time.Minute;
         }
     }
 }

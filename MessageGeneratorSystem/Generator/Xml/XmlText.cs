@@ -13,9 +13,7 @@ namespace MessageGenerator.Generator.Xml
     {
         public string Key => "t";
 
-        public XmlText()
-        {
-        }
+        public XmlText(){}
 
         public string GenerateText(XElement element)
         {
