@@ -6,7 +6,7 @@ namespace MessageGenerator.Generator.Xml
     {
         private readonly IReadOnlyList<ITextGenXmlElement> _lineElements;
 
-        public string Key => "line";
+        public string Key => "l";
         private const string NewLine = "\n";
 
         public XmlLine(IReadOnlyList<ITextGenXmlElement> lineElements)
