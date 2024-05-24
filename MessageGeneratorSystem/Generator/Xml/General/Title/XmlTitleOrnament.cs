@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MessageGeneratorSystem.Generator.Xml.Title
+namespace MessageGeneratorSystem.Generator.Xml.General.Title
 {
     public class XmlTitleOrnament : ITitleOrnament
     {
@@ -40,7 +40,7 @@ namespace MessageGeneratorSystem.Generator.Xml.Title
             {
                 e = Encoding.GetEncoding(ShiftJISCode);
             }
-            catch(NotSupportedException ex)
+            catch (NotSupportedException ex)
             {
                 e = Encoding.UTF8;
             }

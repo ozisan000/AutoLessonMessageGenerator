@@ -1,8 +1,4 @@
-﻿using MessageGenerator.Generator.Xml;
-using Xunit.Abstractions;
-using System.Xml.Linq;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
-using MessageGeneratorSystem.Generator.Xml;
+﻿using Xunit.Abstractions;
 
 namespace MessageGeneratorTest.Generator.Xml
 {

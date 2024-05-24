@@ -1,11 +1,5 @@
-﻿using MessageGenerator.Generator.Xml;
-using MessageGeneratorSystem.Generator.Xml;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MessageGeneratorSystem.Generator.Xml;
+using MessageGeneratorSystem.Generator.Xml.General;
 using System.Xml.Linq;
 using Xunit.Abstractions;
 
@@ -13,7 +7,7 @@ namespace MessageGeneratorTest.Generator.Xml
 {
     internal class XmlTestHelper
     {
-        public static void QuickCheckXmlGenerate(
+        public static string QuickCheckXmlGenerate(
             ITestOutputHelper output,
             IReadOnlyList<ITextGenXmlElement> xmlElementList,
             string filePath, 
@@ -32,29 +26,24 @@ namespace MessageGeneratorTest.Generator.Xml
             }
             if (check != "") Assert.Equal(check, result);
             output.WriteLine($"------------Result Generate------------ \n\n{result}");
+            return result;
         }
 
         public static IReadOnlyList<ITextGenXmlElement> CreateSimpleElementList(List<ITextGenXmlElement>? textElements = null)
         {
             XmlText xmlText = new XmlText();
+            XmlTitle xmlTitle = new XmlTitle();
             List<ITextGenXmlElement> textElementList;
             if (textElements != null) 
                 textElementList = new(textElements);
             else
                 textElementList = new();
             textElementList.Add(xmlText);
+            textElementList.Add(xmlTitle);
 
-            XmlTitle xmlTitle = new XmlTitle();
-
-            XmlLine xmlLine = new XmlLine(textElementList);
-
-            List<ITextGenXmlElement> xmlElementList = new(textElementList)
-            {
-                xmlLine,
-                xmlTitle
-            };
-
-            return xmlElementList;
+            var xmlLine = new XmlLine(textElementList);
+            textElementList.Add(xmlLine);
+            return textElementList;
         }
 
         public static XDocument LoadXml(string file, ITestOutputHelper output)

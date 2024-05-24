@@ -8,13 +8,13 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using MessageGeneratorSystem.Generator.Xml;
 
-namespace MessageGenerator.Generator.Xml
+namespace MessageGeneratorSystem.Generator.Xml.General
 {
     public class XmlText : ITextGenXmlElement
     {
         public string Key => "t";
 
-        public XmlText(){}
+        public XmlText() { }
 
         public string GenerateText(XElement element)
         {

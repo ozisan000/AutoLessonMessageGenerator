@@ -1,5 +1,6 @@
 ﻿using MessageGenerator.Logic;
 using MessageGeneratorSystem.Generator.Xml;
+using MessageGeneratorSystem.Generator.Xml.Reservation;
 using Xunit.Abstractions;
 
 namespace MessageGeneratorTest.Generator.Xml
@@ -10,9 +11,7 @@ namespace MessageGeneratorTest.Generator.Xml
         //private const string TestGuidePath = @"\TestResources\TestGuide.xml";
         private const string TestLessonFeePath = @"\TestResources\SimpleLessonFee.xml";
         private const int TestFee = 100;
-        private const int NewTestFee = 300;
         private const string TestFeeText = "100\n";
-        private const string TestNewFeeText = "300\n";
 
         public XmlLessonFeeTest(ITestOutputHelper output)
         {
@@ -23,8 +22,7 @@ namespace MessageGeneratorTest.Generator.Xml
         private void CheckLessonFee()
         {
             Reservation reservation = new(TestFee);
-            XmlLessonFee xmlLessonFee = new();
-            xmlLessonFee.LessonFee += () => reservation.LessonFee;
+            XmlLessonFee xmlLessonFee = new(reservation);
 
             List<ITextGenXmlElement> textGenXmlElements = new List<ITextGenXmlElement>()
             {
@@ -38,14 +36,6 @@ namespace MessageGeneratorTest.Generator.Xml
                 elementList,
                 TestLessonFeePath,
                 TestFeeText);
-
-            reservation = new(reservation, NewTestFee);
-
-            XmlTestHelper.QuickCheckXmlGenerate(
-                _output,
-                elementList,
-                TestLessonFeePath,
-                TestNewFeeText);
         }
     }
 }

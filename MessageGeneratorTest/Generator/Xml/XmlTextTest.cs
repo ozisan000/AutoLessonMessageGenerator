@@ -1,6 +1,6 @@
-using MessageGenerator.Generator.Xml;
-using Xunit.Abstractions;
+using MessageGeneratorSystem.Generator.Xml.General;
 using System.Xml.Linq;
+using Xunit.Abstractions;
 
 namespace MessageGeneratorTest.Generator.Xml
 {

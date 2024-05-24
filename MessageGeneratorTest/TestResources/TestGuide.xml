@@ -25,11 +25,12 @@
   </l>
   <l>
     <t>合計 </t>
-    <totalLessonFee/>
-    <t>コマ </t>
     <totalLessonCount/>
+    <t>コマ </t>
+    <totalLessonFee/>
     <t>円(税込み)</t>
   </l>
+  <l></l>
   <title2>PapPay送金機能を利用したお支払い</title2>
   <l>
     <t>下記のURLよりご送金よろしくお願いします↓</t>
@@ -38,6 +39,7 @@
     <!--<payURL>testhogehogepay.com</payURL>-->
     <t>hogehoge.com</t>
   </l>
+  <l></l>
   <l>
     <t>--銀行口座へのお支払い--</t>
   </l>

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MessageGeneratorSystem.Generator.Xml.General.Title;
 using System.Xml.Linq;
-using MessageGeneratorSystem.Generator.Xml.Title;
 
-namespace MessageGeneratorSystem.Generator.Xml
+namespace MessageGeneratorSystem.Generator.Xml.General
 {
     public class XmlTitle : ITextGenXmlElement
     {

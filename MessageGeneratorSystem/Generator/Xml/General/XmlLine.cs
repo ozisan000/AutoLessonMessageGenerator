@@ -1,7 +1,6 @@
 ﻿using System.Xml.Linq;
-using MessageGeneratorSystem.Generator.Xml;
 
-namespace MessageGenerator.Generator.Xml
+namespace MessageGeneratorSystem.Generator.Xml.General
 {
     public class XmlLine : ITextGenXmlElement
     {
@@ -10,9 +9,9 @@ namespace MessageGenerator.Generator.Xml
         public string Key => "l";
         private const string NewLine = "\n";
 
-        public XmlLine(IReadOnlyList<ITextGenXmlElement> lineElements)
+        public XmlLine(IReadOnlyList<ITextGenXmlElement> elements)
         {
-            _lineElements = lineElements;
+            _lineElements = elements;
         }
 
         public string GenerateText(XElement element)
