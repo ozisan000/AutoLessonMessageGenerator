@@ -38,7 +38,9 @@
     <!--<payURL>testhogehogepay.com</payURL>-->
     <t>hogehoge.com</t>
   </l>
-  <title2>銀行口座へのお支払い</title2>
+  <l>
+    <t>--銀行口座へのお支払い--</t>
+  </l>
   <l>
     <!--<bankInfo> hoge </bankInfo>-->
     <t>hogehogebank</t>

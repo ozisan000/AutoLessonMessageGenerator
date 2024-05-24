@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using MessageGeneratorSystem.Generator.Xml;
 
 namespace MessageGenerator.Generator.Xml
 {

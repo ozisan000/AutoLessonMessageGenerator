@@ -7,7 +7,7 @@ namespace MessageGeneratorTest.Generator.Xml
     public class XmlTextTest
     {
         private ITestOutputHelper _output;
-        private readonly string CurrentDirectory = Directory.GetCurrentDirectory();
+        //private readonly string CurrentDirectory = Directory.GetCurrentDirectory();
         private const string SimpleTextXmlPath = @"\TestResources\SimpleText.xml";
 
         private const string SimpleText = "SimpleElement";
@@ -20,8 +20,7 @@ namespace MessageGeneratorTest.Generator.Xml
         [Fact]
         public void SimpleTextTest()
         {
-            _output.WriteLine(CurrentDirectory);
-            XDocument xml = XDocument.Load(CurrentDirectory + SimpleTextXmlPath);
+            XDocument xml = XmlTestHelper.LoadXml(SimpleTextXmlPath,_output);
             XmlText xmlText = new XmlText();
             foreach (var element in xml.Elements())
             {

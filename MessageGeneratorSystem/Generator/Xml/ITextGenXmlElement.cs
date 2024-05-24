@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace MessageGenerator.Generator.Xml
+namespace MessageGeneratorSystem.Generator.Xml
 {
     public interface ITextGenXmlElement
     {
