@@ -1,17 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <schedule>
-  <l>
-    <date/>
+    <date>MM/dd</date>
     <t> </t>
     <startHour/>
     <t>時</t>
-    <startMinites/>
+    <startMinutes/>
     <t>分～</t>
     <endHour/>
     <t>時</t>
-    <endMinites/>
+    <endMinutes/>
     <t>分 </t>
     <lessonCount/>
     <t>コマ</t>
-  </l>
 </schedule>

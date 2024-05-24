@@ -12,6 +12,6 @@ namespace MessageGeneratorSystem.Generator.Xml.Reservation
     {
         public override string Key => "endMinutes";
 
-        public XmlEndMinutes(DaySchedule schedule) : base(schedule.EndSchedule.Minute) { }
+        public XmlEndMinutes(DaySchedule schedule, string format = "00") : base(schedule.EndSchedule.Minute, format) { }
     }
 }

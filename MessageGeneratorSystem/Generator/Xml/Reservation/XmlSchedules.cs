@@ -14,6 +14,7 @@ namespace MessageGeneratorSystem.Generator.Xml.Reservation
         private readonly IReadOnlyList<DaySchedule> _schedules;
         private readonly GenerateXmlSchedule _generateXmlSchedule;
         private readonly string defaultText;
+        private const string NewLine = "\n";
 
         public XmlSchedules(
             Logic.Reservation reservation,
@@ -31,9 +32,9 @@ namespace MessageGeneratorSystem.Generator.Xml.Reservation
             string result = "";
             foreach (var schedule in _schedules.OrderBy(s => s.StartSchedule))
             {
-                result += _generateXmlSchedule.GenerateScheduleText(schedule);
+                result += _generateXmlSchedule.GenerateScheduleText(schedule) + NewLine;
             }
-            return result;
+            return result + NewLine;
         }
     }
 }

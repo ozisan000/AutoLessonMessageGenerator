@@ -42,7 +42,7 @@ namespace MessageGeneratorSystem.Generator.Xml.Reservation
                 if (genElement == null) continue;
                 result += genElement.GenerateText(element);
             }
-            return result + NewLine + NewLine;
+            return result;
         }
     }
 }

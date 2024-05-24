@@ -11,15 +11,17 @@ namespace MessageGeneratorSystem.Generator.Xml.General
     {
         public abstract string Key { get; }
         protected readonly int value;
+        protected readonly string format;
 
-        public XmlIntValue(int value)
+        public XmlIntValue(int value , string format = "")
         {
+            this.format = format;
             this.value = value;
         }
 
         public string GenerateText(XElement element)
         {
-            return value.ToString();
+            return value.ToString(format);
         }
     }
 }

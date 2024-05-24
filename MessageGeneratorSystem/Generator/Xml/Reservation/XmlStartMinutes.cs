@@ -12,6 +12,6 @@ namespace MessageGeneratorSystem.Generator.Xml.Reservation
     {
         public override string Key => "startMinutes";
 
-        public XmlStartMinutes(DaySchedule schedule) : base(schedule.StartSchedule.Minute) { }
+        public XmlStartMinutes(DaySchedule schedule, string format = "00") : base(schedule.StartSchedule.Minute,format) { }
     }
 }

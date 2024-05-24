@@ -33,8 +33,20 @@ namespace MessageGeneratorTest.Generator
                 new DateTime(2024, 1, 1, 2, 1, 0)
                 ));
 
+            reservation = reservation.AddSchedule(new DaySchedule(
+                new DateTime(2024, 2, 1, 1, 1, 0),
+                new DateTime(2024, 2, 1, 2, 1, 0)
+            ));
+
+            reservation = reservation.AddSchedule(new DaySchedule(
+                new DateTime(2024, 2, 6, 7, 1, 0),
+                new DateTime(2024, 2, 6, 10, 1, 0)
+            ));
+
+
             //予約の内容が確定したのちの処理
-            GenerateXmlGuide generateXmlGuide = new(TestGuidePath, TestSchedulePath);
+            GenerateXmlSchedule generateSchedule = new(Directory.GetCurrentDirectory() + TestSchedulePath);
+            GenerateXmlGuide generateXmlGuide = new(generateSchedule, Directory.GetCurrentDirectory() + TestGuidePath);
             _output.WriteLine($"{generateXmlGuide.GenerateGuide(reservation)}");
         }
     }

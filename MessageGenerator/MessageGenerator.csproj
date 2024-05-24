@@ -45,14 +45,6 @@
     <ProjectReference Include="..\MessageGeneratorSystem\MessageGeneratorSystem.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Guide.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Schedule.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="GenerateControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -61,6 +53,14 @@
     <Page Update="ScheduleControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Data\Guide.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Schedule.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <!-- 

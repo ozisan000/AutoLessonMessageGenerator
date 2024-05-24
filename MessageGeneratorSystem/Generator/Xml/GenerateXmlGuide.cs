@@ -7,28 +7,24 @@ namespace MessageGeneratorSystem.Generator.Xml
     public class GenerateXmlGuide
     {
         private readonly string guideXmlPath;
-        private readonly string scheduleXmlPath;
         private readonly XmlText _defaultText = new XmlText();
         private readonly XmlTitle _defaultTitle = new XmlTitle();
+        private readonly GenerateXmlSchedule _generateXmlSchedule;
         private readonly string defaultText;
 
-        public GenerateXmlGuide(string guidePath,string scheduleXmlPath,string defaultText = "[LoadGuideError]")
+        public GenerateXmlGuide(GenerateXmlSchedule generate,string guidePath,string defaultText = "[LoadGuideError]")
         {
-            string currentDirectory = Directory.GetCurrentDirectory();
-            this.guideXmlPath = currentDirectory + guidePath;
-            this.scheduleXmlPath = currentDirectory + scheduleXmlPath;
+            this.guideXmlPath = guidePath;
+            _generateXmlSchedule = generate;
             this.defaultText = defaultText;
-            
         }
 
         public string GenerateGuide(Logic.Reservation reservation)
         {
-            GenerateXmlSchedule generateSchedule = new(scheduleXmlPath);
-
             XmlLessonFee xmlLessonFee = new(reservation);
             XmlTotalLessonFee xmlTotalLessonFee = new(reservation);
             XmlTotalLessonCount xmlTotalLessonCount = new(reservation);
-            XmlSchedules xmlSchedules = new(reservation, generateSchedule);
+            XmlSchedules xmlSchedules = new(reservation, _generateXmlSchedule);
 
             List<ITextGenXmlElement> xmlElements = new List<ITextGenXmlElement>()
             {
