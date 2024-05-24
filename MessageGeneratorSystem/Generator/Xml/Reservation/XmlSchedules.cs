@@ -1,4 +1,4 @@
-﻿using MessageGenerator.Logic;
+﻿using MessageGeneratorSystem.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace MessageGeneratorSystem.Generator.Xml.Reservation
         private readonly string defaultText;
 
         public XmlSchedules(
-            MessageGenerator.Logic.Reservation reservation,
+            Logic.Reservation reservation,
             GenerateXmlSchedule generateSchedule,
             string defaultText = "[NotRegistedSchedules]")
         {

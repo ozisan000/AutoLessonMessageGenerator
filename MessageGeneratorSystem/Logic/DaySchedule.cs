@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MessageGenerator.Logic
+namespace MessageGeneratorSystem.Logic
 {
     public class DaySchedule
     {

@@ -11,6 +11,6 @@ namespace MessageGeneratorSystem.Generator.Xml.Reservation
     {
         public override string Key => "totalLessonCount";
 
-        public XmlTotalLessonCount(MessageGenerator.Logic.Reservation reservation) : base(reservation.TotalLessonCount) { }
+        public XmlTotalLessonCount(Logic.Reservation reservation) : base(reservation.TotalLessonCount) { }
     }
 }

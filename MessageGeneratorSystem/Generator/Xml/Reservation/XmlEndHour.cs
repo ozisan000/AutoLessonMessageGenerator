@@ -1,4 +1,4 @@
-﻿using MessageGenerator.Logic;
+﻿using MessageGeneratorSystem.Logic;
 using MessageGeneratorSystem.Generator.Xml.General;
 using System;
 using System.Collections.Generic;

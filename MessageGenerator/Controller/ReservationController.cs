@@ -1,5 +1,5 @@
 ﻿using MessageGenerator.Generator;
-using MessageGenerator.Logic;
+using MessageGeneratorSystem.Logic;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Configuration;

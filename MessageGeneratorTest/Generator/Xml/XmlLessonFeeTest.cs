@@ -1,4 +1,4 @@
-﻿using MessageGenerator.Logic;
+﻿using MessageGeneratorSystem.Logic;
 using MessageGeneratorSystem.Generator.Xml;
 using MessageGeneratorSystem.Generator.Xml.Reservation;
 using Xunit.Abstractions;

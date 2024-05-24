@@ -1,4 +1,4 @@
-﻿using MessageGenerator.Logic;
+﻿using MessageGeneratorSystem.Logic;
 using System.Xml.Linq;
 
 namespace MessageGeneratorSystem.Generator.Xml.Reservation

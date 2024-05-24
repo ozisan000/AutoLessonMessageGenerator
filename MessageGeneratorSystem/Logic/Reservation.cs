@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace MessageGenerator.Logic
+namespace MessageGeneratorSystem.Logic
 {
     public class Reservation
     {

@@ -1,4 +1,4 @@
-﻿using MessageGenerator.Logic;
+﻿using MessageGeneratorSystem.Logic;
 using MessageGeneratorSystem.Generator.Xml.General;
 using System;
 using System.Collections.Generic;
@@ -12,6 +12,6 @@ namespace MessageGeneratorSystem.Generator.Xml.Reservation
     {
         public override string Key => "totalLessonFee";
 
-        public XmlTotalLessonFee(MessageGenerator.Logic.Reservation reservation) : base(reservation.TotalLessonFee) { }
+        public XmlTotalLessonFee(Logic.Reservation reservation) : base(reservation.TotalLessonFee) { }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using MessageGenerator.Helper;
-using MessageGenerator.Logic;
+using MessageGeneratorSystem.Logic;
 using System.Linq;
 
 namespace MessageGenerator.Generator
