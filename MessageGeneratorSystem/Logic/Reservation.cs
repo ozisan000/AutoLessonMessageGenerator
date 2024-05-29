@@ -77,7 +77,7 @@ namespace MessageGeneratorSystem.Logic
                 (oriEnd <= checkStart && oriEnd < checkEnd);
             };
 
-            return !schedules.Any(schedule => BeSchedule(schedule));
+            return !schedules.All(schedule => BeSchedule(schedule));
         }
     }
 
