@@ -12,16 +12,18 @@
         <DesktopAcrylicBackdrop/>
     </Window.SystemBackdrop>
     <Grid>
+        <TeachingTip Name="addErrorFlyout" PreferredPlacement="BottomRight">
+        </TeachingTip>
         <StackPanel Orientation="Vertical" Spacing = "10" Margin="15" HorizontalAlignment="Left">
             <CalendarDatePicker x:Name="startDatePicker" Header="日付"/>
             <TimePicker x:Name="startTimePicker" ClockIdentifier="24HourClock" Header="開始時間"/>
             <TimePicker x:Name="endTimePicker"  ClockIdentifier="24HourClock" Header="終了時間"/>
+            <Button x:Name="addButton" Content="Add" Width="200"/>
             <StackPanel Orientation="Horizontal" Spacing = "10" >
                 <TextBlock x:Name="lessonFeeLabel" Text="授業料" VerticalAlignment="Center"/>
                 <NumberBox x:Name="feeInputBox" MaxWidth="70" Minimum="0" Text="0" PlaceholderText="授業料"/>
                 <TextBlock x:Name="moneyLabel" Text="円" VerticalAlignment="Center"/>
             </StackPanel>
-            <Button x:Name="addButton" Content="Add" Width="200"/>
         </StackPanel>
         <ScrollViewer x:Name="confimViewer" Margin="270,20,10,64" HorizontalAlignment="Stretch" Background="{ThemeResource LayerOnAccentAcrylicFillColorDefault}" CornerRadius="5">
             <StackPanel x:Name="scheduleStackPanel">

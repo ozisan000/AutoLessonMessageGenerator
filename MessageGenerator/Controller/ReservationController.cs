@@ -31,7 +31,6 @@ namespace MessageGenerator.Controller
             _mainView = mainView;
             _reservation = new Reservation(0);
 
-
             _mainView.ChangedLessonFee += UpdateLessonFee;
             _mainView.AddedShecule += AddSchedule;
             _mainView.RemovedAtSchedule += RemoveAtSchedule;
@@ -45,11 +44,42 @@ namespace MessageGenerator.Controller
             _guideGenerator = new GenerateXmlGuide(_scheduleGenerator, guideXmlPath);
         }
 
-        private string AddSchedule(DateTime start,DateTime end)
+        private void AddSchedule(DateTime start,DateTime end)
         {
-            var newSchedule = new DaySchedule(start, end);
-            _reservation = _reservation.AddSchedule(newSchedule);
-            return _scheduleGenerator.GenerateScheduleText(newSchedule);
+            DaySchedule newSchedule;
+            try
+            {
+                newSchedule = new DaySchedule(start, end);
+            }
+            catch (PerfectMatchTimeException ex)
+            {
+                _mainView.ShowErrorFlyout(ex.Message);
+                return;
+            }
+            catch (NotCoveredDateException ex)
+            {
+                _mainView.ShowErrorFlyout(ex.Message);
+                return;
+            }catch (EndTimeMinException ex)
+            {
+                _mainView.ShowErrorFlyout(ex.Message);
+                return;
+            }
+
+            (Reservation result, ReservationError error) newReservation = _reservation.AddSchedule(newSchedule);
+            ReservationErrorHandler check = new();
+            if (check.CheckError(newReservation.error))
+            {
+                string subTitle = check.GetErrorMessage(newReservation.error);
+                _mainView.ShowErrorFlyout(subTitle);
+                return;
+            }
+
+            _reservation = newReservation.result;
+            string scheduleText = _scheduleGenerator.GenerateScheduleText(newSchedule);
+
+            //mainViewに反映
+            _mainView.AddScheduleElement(scheduleText);
         }
 
         private void RemoveAtSchedule(int index)
@@ -66,10 +96,13 @@ namespace MessageGenerator.Controller
         /// メッセージを生成し、クリップボードにコピーする、生成に失敗した場合nullを返す
         /// </summary>
         /// <returns></returns>
-        private string GenerateGuideMessage()
+        private void GenerateGuideMessage()
         {
-            if (_reservation.LessonSchedules.Count <= 0) return null;
-            return _guideGenerator.GenerateGuide(_reservation);
+            if (_reservation.LessonSchedules.Count <= 0) return;
+            string result = _guideGenerator.GenerateGuide(_reservation);
+
+            //mainViewで結果を表示
+            _mainView.ShowGenerateDialog(result);
         }
 
         //private void CreateDateItemGenerator()

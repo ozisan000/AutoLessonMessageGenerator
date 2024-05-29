@@ -45,9 +45,9 @@ namespace MessageGenerator
             }
         }
 
-        public event Func<string> GeneratedMessage;
+        public event Action GeneratedMessage;
 
-        public event Func<DateTime, DateTime, string> AddedShecule;
+        public event Action<DateTime, DateTime> AddedShecule;
 
         public event Action<int> RemovedAtSchedule;
 
@@ -73,29 +73,51 @@ namespace MessageGenerator
             _generateControl = new GenerateControl();
             _scheduleControlList = new ScheduleControlList(scheduleStackPanel, Application.Current.Resources, true);
 
-            addButton.Click += ClickAddScheduleButton;
-            generateButton.Click += ClickGenerateButton;
+            addErrorFlyout.Target = addButton;
+            addButton.Click += ClickAddButton;
+            generateButton.Click += (s,e) => GeneratedMessage?.Invoke();
         }
 
-        private void ClickAddScheduleButton(object s, RoutedEventArgs e)
+        public void AddScheduleElement(string scheduleText)
         {
-            string scheduleText = AddedShecule?.Invoke(_startPicker.GetDateTime(), _endPicker.GetDateTime());
-
             var control = new ScheduleControl(scheduleText);
             control.ClickDeleteButton += (s, a) => ClickRemoveScheduleButton(control);
             _scheduleControlList.AddScheduleControl(control);
+        }
+
+        public void ShowGenerateDialog(string generated)
+        {
+            _generateControl.ShowGenerateDialogAsync(this.Content.XamlRoot, generated);
+        }
+
+        public void ShowErrorFlyout(string subtitle)
+        {
+            addErrorFlyout.Subtitle = subtitle;
+            addErrorFlyout.IsOpen = true;
+        }
+
+        private void ClickAddButton(object s, RoutedEventArgs e)
+        {
+            (DateTime result, DateTimePickerError error) startResult = _startPicker.GetDateTime();
+            (DateTime result, DateTimePickerError error) endResult = _endPicker.GetDateTime();
+            if (CheckAddButtonError(startResult.error) || CheckAddButtonError(endResult.error)) return;
+
+            AddedShecule?.Invoke(startResult.result, endResult.result);
+        }
+
+        private bool CheckAddButtonError(DateTimePickerError error)
+        {
+            DateTimePickerErrorHandler check = new();
+            if (!check.CheckError(error)) return false;
+            IDateTimePickerError errorResource = check.GetIDateTimePickerError(error);
+            ShowErrorFlyout(errorResource.ErrorMessage);
+            return true;
         }
 
         private void ClickRemoveScheduleButton(ScheduleControl deleteSchedule)
         {
             int deleteIndex = _scheduleControlList.RemoveScheduleControl(deleteSchedule);
             RemovedAtSchedule?.Invoke(deleteIndex);
-        }
-
-        private void ClickGenerateButton(object s, RoutedEventArgs e)
-        {
-            string generated = GeneratedMessage?.Invoke();
-            _generateControl.ShowGenerateDialogAsync(this.Content.XamlRoot, generated);
         }
     }
 }

@@ -2,6 +2,12 @@
 
 namespace MessageGeneratorSystem.Logic
 {
+    public enum ReservationError
+    {
+        SUCSESS,
+        CoveredLesson,
+    }
+
     public class Reservation
     {
         public readonly IReadOnlyList<DaySchedule> LessonSchedules;
@@ -31,15 +37,15 @@ namespace MessageGeneratorSystem.Logic
             this.LessonFee = oldReservation.LessonFee;
         }
 
-        public Reservation AddSchedule(DaySchedule addSchedule)
+        public (Reservation, ReservationError) AddSchedule(DaySchedule addSchedule)
         {
-            if (ForSimilaritySchedule(LessonSchedules, addSchedule))
-                throw new ArgumentException();
+            if (CheckCoveredSchedule(LessonSchedules, addSchedule)) 
+                return (this, ReservationError.CoveredLesson);
             List<DaySchedule> newSchedules = new List<DaySchedule>(LessonSchedules)
             {
                 addSchedule
             };
-            return new Reservation(this, newSchedules);
+            return (new Reservation(this, newSchedules), ReservationError.SUCSESS);
         }
 
         public Reservation RemoveScheduleAt(int index)
@@ -56,7 +62,7 @@ namespace MessageGeneratorSystem.Logic
             return new Reservation(this, newSchedules);
         }
 
-        public static bool ForSimilaritySchedule(IEnumerable<DaySchedule> schedules, DaySchedule checkSchedule)
+        public static bool CheckCoveredSchedule(IEnumerable<DaySchedule> schedules, DaySchedule checkSchedule)
         {
             if (schedules.Count() <= 0) return false;
             var BeSchedule = (DaySchedule schedule) =>
@@ -73,5 +79,45 @@ namespace MessageGeneratorSystem.Logic
 
             return !schedules.Any(schedule => BeSchedule(schedule));
         }
+    }
+
+    public interface IReservationError
+    {
+        public ReservationError Error { get; }
+        public string ErrorMessage { get; }
+    }
+
+    public class ReservationErrorHandler
+    {
+        private readonly List<IReservationError> _errorList = new()
+        {
+            new CoveredLessonError()
+        };
+
+        public bool CheckError(ReservationError error)
+        {
+            IReservationError? result = GetIReservationError(error);
+            if (result == null) return false;
+            return true;
+        }
+
+        public string GetErrorMessage(ReservationError error)
+        {
+            IReservationError? result = GetIReservationError(error);
+            if (result != null) return result.ErrorMessage;
+            return ReservationError.SUCSESS.ToString();
+        }
+
+        public IReservationError? GetIReservationError(ReservationError error)
+        {
+            return _errorList.FirstOrDefault(item => item.Error == error);
+        }
+    }
+
+    public class CoveredLessonError : IReservationError
+    {
+        public ReservationError Error => ReservationError.CoveredLesson;
+
+        public string ErrorMessage => "This lesson conflicts with the registered lesson.";
     }
 }
