@@ -24,6 +24,7 @@ namespace MessageGeneratorSystem.Generator.Xml
             XmlLessonFee xmlLessonFee = new(reservation);
             XmlTotalLessonFee xmlTotalLessonFee = new(reservation);
             XmlTotalLessonCount xmlTotalLessonCount = new(reservation);
+            XmlTopMonth xmlTopMonth = new(reservation);
             XmlSchedules xmlSchedules = new(reservation, _generateXmlSchedule);
 
             List<ITextGenXmlElement> xmlElements = new List<ITextGenXmlElement>()
@@ -32,6 +33,7 @@ namespace MessageGeneratorSystem.Generator.Xml
                 xmlTotalLessonCount,
                 xmlLessonFee,
                 xmlSchedules,
+                xmlTopMonth,
                 _defaultText,
                 _defaultTitle
             };
