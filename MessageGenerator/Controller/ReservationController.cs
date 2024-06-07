@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Configuration;
 using System.IO;
+using System.Reflection;
 
 namespace MessageGenerator.Controller
 {
@@ -13,6 +14,8 @@ namespace MessageGenerator.Controller
     {
         private MainWindow _mainView;
         private Reservation _reservation;
+        private GeneratorController _generatorController;
+
         //private DateItemGenerator _dateItemGenerator;
         //private GuideGenerator _guideGenerator;
         private GenerateXmlSchedule _scheduleGenerator;
@@ -23,25 +26,17 @@ namespace MessageGenerator.Controller
 
         private const string ScheduleMarkUpKey = "ScheduleMarkUpFile";
         private const string GuideMarkUpKey = "GuideMarkUpFile";
-        private const string DefaultScheduleMarkUpKey = "ScheduleMarkUpFile";
-        private const string DefaultGuideMarkUpKey = "GuideMarkUpFile";
+        private const string DocumentFolderKey = "DocumentFolder";
 
         public ReservationController(MainWindow mainView)
         {
             _mainView = mainView;
             _reservation = new Reservation(0);
-
             _mainView.ChangedLessonFee += UpdateLessonFee;
             _mainView.AddedShecule += AddSchedule;
             _mainView.RemovedAtSchedule += RemoveAtSchedule;
             _mainView.GeneratedMessage += GenerateGuideMessage;
-
-            string current = AppContext.BaseDirectory;
-            scheduleXmlPath = current + ConfigurationManager.AppSettings[ScheduleMarkUpKey];
-            guideXmlPath = current + ConfigurationManager.AppSettings[GuideMarkUpKey];
-
-            _scheduleGenerator = new GenerateXmlSchedule(scheduleXmlPath);
-            _guideGenerator = new GenerateXmlGuide(_scheduleGenerator, guideXmlPath);
+            _mainView.LoadXml += LoadXamlInit;
         }
 
         private void AddSchedule(DateTime start,DateTime end)
@@ -76,15 +71,18 @@ namespace MessageGenerator.Controller
             }
 
             _reservation = newReservation.result;
-            string scheduleText = _scheduleGenerator.GenerateScheduleText(newSchedule);
+            string scheduleText = _generatorController.GenerateScheduleText(newSchedule);
 
             //mainViewに反映
             _mainView.AddScheduleElement(scheduleText);
+            _mainView.EnabledGenerateButton = true;
         }
 
         private void RemoveAtSchedule(int index)
         {
             _reservation = _reservation.RemoveScheduleAt(index);
+            if (_reservation.LessonSchedules.Count <= 0)
+                _mainView.EnabledGenerateButton = false;
         }
 
         private void UpdateLessonFee(object? sender, NumberBoxValueChangedEventArgs e)
@@ -99,22 +97,15 @@ namespace MessageGenerator.Controller
         private void GenerateGuideMessage()
         {
             if (_reservation.LessonSchedules.Count <= 0) return;
-            string result = _guideGenerator.GenerateGuide(_reservation);
+            string result = _generatorController.GenerateGuide(_reservation);
 
             //mainViewで結果を表示
             _mainView.ShowGenerateDialog(result);
         }
 
-        //private void CreateDateItemGenerator()
-        //{
-        //    try
-        //    {
-        //        _dateItemGenerator = new DateItemGenerator(ConfigurationManager.AppSettings[ScheduleMarkUpKey]);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //    }
-        //}
+        public void LoadXamlInit()
+        {
+            _generatorController = new GeneratorController(_mainView, _reservation);
+        }
     }
 }

@@ -22,27 +22,28 @@ namespace MessageGenerator
 {
     public sealed partial class GenerateControl : UserControl
     {
-        private readonly ContentDialog dialog = new();
+        private readonly ContentDialog _dialog = new();
 
         public GenerateControl(
+            XamlRoot root,
             string titleText = "Generate Message",
             string primaryText = "CopyClipBoard",
             string closeText = "Close")
         {
             this.InitializeComponent();
-            dialog.Content = this;
-            dialog.Title = titleText;
-            dialog.PrimaryButtonText = primaryText;
-            dialog.CloseButtonText = closeText;
+            _dialog.XamlRoot = root;
+            _dialog.Content = this;
+            _dialog.Title = titleText;
+            _dialog.PrimaryButtonText = primaryText;
+            _dialog.CloseButtonText = closeText;
         }
 
-        public async void ShowGenerateDialogAsync(XamlRoot root,string generated)
+        public async void ShowGenerateDialogAsync(string generated)
         {
             generateText.Text = generated;
-            dialog.XamlRoot = root;
-            dialog.PrimaryButtonClick += (s, e) => CopyTextClipBoard(s, e, generated);
-            await dialog.ShowAsync();
-            dialog.PrimaryButtonClick -= (s, e) => CopyTextClipBoard(s, e, generated);
+            _dialog.PrimaryButtonClick += (s, e) => CopyTextClipBoard(s, e, generated);
+            await _dialog.ShowAsync();
+            _dialog.PrimaryButtonClick -= (s, e) => CopyTextClipBoard(s, e, generated);
         }
 
         private void CopyTextClipBoard(ContentDialog s,ContentDialogButtonClickEventArgs e,string generated)

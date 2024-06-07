@@ -40,6 +40,7 @@ namespace MessageGenerator.View
 
         public const string MinKeyWord = "Min";
         public const string MaxKeyWord = "Max";
+        public const string DefaultCreateKeyWord = "DefaultCreate";
         public const string CreateKeyWord = "Create";
         public const string WidthKeyWord = "Width";
         public const string HeightKeyWord = "Height";

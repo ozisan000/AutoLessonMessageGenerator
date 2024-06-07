@@ -1,10 +1,8 @@
-﻿using System.IO;
-using System;
-
-namespace MessageGenerator.Helper
+﻿namespace MessageGenerator.Helper
 {
     public class GeneratorHelper
     {
+
         public static string ReadOrCreateMarkUpFile(string filePath)
         {
             string result = null;

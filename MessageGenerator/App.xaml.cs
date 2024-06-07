@@ -42,7 +42,14 @@ namespace MessageGenerator
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            var dummyLoad = new DummyLoadControl();
+            RoutedEventHandler initAct = (object sender, RoutedEventArgs e) =>
+            {
+                _controller.LoadXamlInit();
+            };
+            dummyLoad.Loaded += initAct;
             var mainWindow = new MainWindow();
+            mainWindow.LoadedWindow += initAct;
             _controller = new ReservationController(mainWindow);
             m_window = mainWindow;
             m_window.Activate();

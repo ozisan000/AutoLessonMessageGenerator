@@ -11,10 +11,15 @@
     <Window.SystemBackdrop>
         <DesktopAcrylicBackdrop/>
     </Window.SystemBackdrop>
-    <Grid>
+    <Grid Name="rootGrid">
+        <MenuBar VerticalAlignment="Top" HorizontalAlignment="Left">
+            <MenuBarItem Title="File">
+                <MenuFlyoutItem Name="loadXmlFlyoutItem" Text="Load Default Xml"/>
+            </MenuBarItem>
+        </MenuBar>
         <TeachingTip Name="addErrorFlyout" PreferredPlacement="BottomRight">
         </TeachingTip>
-        <StackPanel Orientation="Vertical" Spacing = "10" Margin="15" HorizontalAlignment="Left">
+        <StackPanel Orientation="Vertical" Spacing = "10" Margin="15 40" HorizontalAlignment="Left">
             <CalendarDatePicker x:Name="startDatePicker" Header="日付"/>
             <TimePicker x:Name="startTimePicker" ClockIdentifier="24HourClock" Header="開始時間"/>
             <TimePicker x:Name="endTimePicker"  ClockIdentifier="24HourClock" Header="終了時間"/>
@@ -25,7 +30,7 @@
                 <TextBlock x:Name="moneyLabel" Text="円" VerticalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
-        <ScrollViewer x:Name="confimViewer" Margin="270,20,10,64" HorizontalAlignment="Stretch" Background="{ThemeResource LayerOnAccentAcrylicFillColorDefault}" CornerRadius="5">
+        <ScrollViewer x:Name="confimViewer" Margin="270,40,10,64" HorizontalAlignment="Stretch" Background="{ThemeResource LayerOnAccentAcrylicFillColorDefault}" CornerRadius="5">
             <StackPanel x:Name="scheduleStackPanel">
                 <!--<local:ScheduleControl/>-->
             </StackPanel>
