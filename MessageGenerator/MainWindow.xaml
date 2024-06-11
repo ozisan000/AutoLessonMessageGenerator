@@ -13,8 +13,9 @@
     </Window.SystemBackdrop>
     <Grid Name="rootGrid">
         <MenuBar VerticalAlignment="Top" HorizontalAlignment="Left">
-            <MenuBarItem Title="File">
-                <MenuFlyoutItem Name="loadXmlFlyoutItem" Text="Load Default Xml"/>
+            <MenuBarItem Name="fileBarItem" Title="File">
+                <MenuFlyoutItem Name="defaultXmlItem" Text="Load Default Xml"/>
+                <MenuFlyoutItem Name="selectGuideItem" Text="Select Guide Xml"/>
             </MenuBarItem>
         </MenuBar>
         <TeachingTip Name="addErrorFlyout" PreferredPlacement="BottomRight">

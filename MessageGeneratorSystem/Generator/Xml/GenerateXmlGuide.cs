@@ -9,23 +9,21 @@ namespace MessageGeneratorSystem.Generator.Xml
         private readonly XDocument _xDocument;
         private readonly XmlText _defaultText = new XmlText();
         private readonly XmlTitle _defaultTitle = new XmlTitle();
-        private readonly GenerateXmlSchedule _generateXmlSchedule;
         private readonly string defaultText;
 
-        public GenerateXmlGuide(GenerateXmlSchedule generate,string guidePath,string defaultText = "[LoadGuideError]")
+        public GenerateXmlGuide(string guidePath,string defaultText = "[LoadGuideError]")
         {
             _xDocument = XDocument.Load(guidePath, LoadOptions.PreserveWhitespace);
-            _generateXmlSchedule = generate;
             this.defaultText = defaultText;
         }
 
-        public string GenerateGuide(Logic.Reservation reservation)
+        public string GenerateGuide(Logic.Reservation reservation,GenerateXmlSchedule generateXmlSchedule)
         {
             XmlLessonFee xmlLessonFee = new(reservation);
             XmlTotalLessonFee xmlTotalLessonFee = new(reservation);
             XmlTotalLessonCount xmlTotalLessonCount = new(reservation);
             XmlTopMonth xmlTopMonth = new(reservation);
-            XmlSchedules xmlSchedules = new(reservation, _generateXmlSchedule);
+            XmlSchedules xmlSchedules = new(reservation, generateXmlSchedule);
 
             List<ITextGenXmlElement> xmlElements = new List<ITextGenXmlElement>()
             {

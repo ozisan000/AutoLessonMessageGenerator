@@ -4,6 +4,8 @@ using Microsoft.UI.Xaml.Controls;
 using Native;
 using System;
 using Windows.Foundation;
+using Windows.Storage.Pickers;
+using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -56,11 +58,9 @@ namespace MessageGenerator
         }
 
         public event Action GeneratedMessage;
-
-        public event Action LoadXml;
-
+        public event Action DefaultLoadXml;
+        public event Action<string> SelectGuideXml;
         public event Action<DateTime, DateTime> AddedShecule;
-
         public event Action<int> RemovedAtSchedule;
 
         private readonly DateTimePicker _startPicker;
@@ -93,7 +93,8 @@ namespace MessageGenerator
             addErrorFlyout.Target = addButton;
             addButton.Click += ClickAddButton;
             generateButton.Click += (s,e) => GeneratedMessage?.Invoke();
-            loadXmlFlyoutItem.Click += (s, e) => LoadXml?.Invoke();
+            defaultXmlItem.Click += (s, e) => DefaultLoadXml?.Invoke();
+            selectGuideItem.Click += (s, e) => ClickSelectGuide();
         }
 
         public void AddScheduleElement(string scheduleText)
@@ -152,6 +153,18 @@ namespace MessageGenerator
         {
             int deleteIndex = _scheduleControlList.RemoveScheduleControl(deleteSchedule);
             RemovedAtSchedule?.Invoke(deleteIndex);
+        }
+
+        private async void ClickSelectGuide()
+        {
+            var dialog = new FileOpenPicker();
+            InitializeWithWindow.Initialize(dialog, WindowNative.GetWindowHandle(this));
+            dialog.FileTypeFilter.Add(".xml");
+            var file = await dialog.PickSingleFileAsync();
+            if (file != null)
+            {
+                SelectGuideXml?.Invoke(file.Path);
+            }
         }
     }
 }

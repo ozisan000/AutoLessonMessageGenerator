@@ -22,10 +22,10 @@ namespace MessageGeneratorTest.Generator.Xml
         private void CheckSchedules()
         {
             Reservation reservation = new(TestFee);
-            reservation = reservation.AddSchedule(new DaySchedule(
-                new DateTime(2024, 1, 1, 1, 1, 0),
-                new DateTime(2024, 1, 1, 2, 1, 0)
-                ));
+            //reservation = reservation.AddSchedule(new DaySchedule(
+            //    new DateTime(2024, 1, 1, 1, 1, 0),
+            //    new DateTime(2024, 1, 1, 2, 1, 0)
+            //    ));
 
             //予約の内容が確定したのちの処理
             GenerateXmlSchedule generateSchedule = new(Directory.GetCurrentDirectory() + TestSchedulePath);

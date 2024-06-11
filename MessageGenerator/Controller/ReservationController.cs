@@ -37,7 +37,13 @@ namespace MessageGenerator.Controller
             _mainView.AddedShecule += AddSchedule;
             _mainView.RemovedAtSchedule += RemoveAtSchedule;
             _mainView.GeneratedMessage += GenerateGuideMessage;
-            _mainView.LoadXml += LoadXaml;
+            _mainView.DefaultLoadXml += () => _generatorController.LoadDefaultXml(_reservation);
+            _mainView.SelectGuideXml += (path) => _generatorController.SelectGuideXml(_reservation, path);
+        }
+
+        public void AfterLoadedUIInit()
+        {
+            _generatorController.LoadCurrentXml(_reservation);
         }
 
         private void RefreshSchedules()
@@ -45,7 +51,7 @@ namespace MessageGenerator.Controller
             _mainView.ClearScheduleElements();
             foreach (var schedule in _reservation.LessonSchedules)
             {
-                string scheduleText = _generatorController.GenerateScheduleText(_reservation, schedule);
+                string scheduleText = _generatorController.GenerateScheduleText(schedule);
                 _mainView.AddScheduleElement(scheduleText);
             }
         }
@@ -110,12 +116,6 @@ namespace MessageGenerator.Controller
 
             //mainViewで結果を表示
             _mainView.ShowGenerateDialog(result);
-        }
-
-        public void LoadXaml()
-        {
-            //_generatorController.LoadDefaultXml(_reservation);
-            _generatorController.LoadCurrentXml(_reservation);
         }
     }
 }

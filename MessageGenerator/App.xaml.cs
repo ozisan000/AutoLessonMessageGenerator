@@ -29,7 +29,7 @@ namespace MessageGenerator
             var dummyLoad = new DummyLoadControl();
             RoutedEventHandler initAct = (object sender, RoutedEventArgs e) =>
             {
-                _controller.LoadXaml();
+                _controller.AfterLoadedUIInit();
             };
             dummyLoad.Loaded += initAct;
             var mainWindow = new MainWindow();

@@ -40,49 +40,37 @@ namespace MessageGenerator.Controller
             _customGuide = new GeneratorCustomConfig(GetLocalDataPath() + GetConfig(CustomGuideKey));
         }
 
-        public void LoadDefaultGuideXml()
+        public void SelectGuideXml(Reservation reservation, string guidePath)
         {
-            string path = GetDefaultXmlPath(DefaultGuideKey);
-            _currentGuide.CurrentPath = path;
+            _currentGuide.CurrentPath = guidePath;
+            LoadCurrentXml(reservation);
         }
 
-        public void LoadDefaultScheduleXml()
+        public void LoadDefaultXml(Reservation reservation)
         {
-            string path = GetDefaultXmlPath(DefaultScheduleKey);
-            _currentSchedule.CurrentPath = path;
+            LoadDefaultGuideXml();
+            LoadDefaultScheduleXml();
+            LoadCurrentXml(reservation);
         }
 
-        public void LoadCurrentXml(Reservation reservation)
+        public bool LoadCurrentXml(Reservation reservation)
         {
             if (!GeneratorDirectory.CheckFile(_currentGuide.CurrentPath)) 
                 LoadDefaultGuideXml();
             if (!GeneratorDirectory.CheckFile(_currentSchedule.CurrentPath)) 
                 LoadDefaultScheduleXml();
-            CreateGenerator(reservation);
+
+            return CreateGenerator(reservation);
         }
 
-        public void LoadXml(Reservation reservation, int index)
+        public string GenerateScheduleText(DaySchedule schedule)
         {
-            string path = _customGuide.GetPathList()[index];
-            LoadCurrentXml(reservation);
-        }
-
-        public string GenerateScheduleText(Reservation reservation, DaySchedule schedule)
-        {
-            if (_scheduleGenerator == null)
-            {
-                LoadCurrentXml(reservation);
-            }
             return _scheduleGenerator.GenerateScheduleText(schedule);
         }
 
         public string GenerateGuide(Reservation reservation)
         {
-            if (_scheduleGenerator == null)
-            {
-                LoadCurrentXml(reservation);
-            }
-            return _guideGenerator.GenerateGuide(reservation);
+            return _guideGenerator.GenerateGuide(reservation,_scheduleGenerator);
         }
 
         private bool CreateGenerator(Reservation reservation)
@@ -90,10 +78,13 @@ namespace MessageGenerator.Controller
             _view.EnabledAddButton = false;
             _view.EnabledGenerateButton = false;
 
+            GenerateXmlGuide xmlGuide;
+            GenerateXmlSchedule xmlSchedule;
+
             try
             {
-                _scheduleGenerator = new GenerateXmlSchedule(_currentSchedule.CurrentPath);
-                _guideGenerator = new GenerateXmlGuide(_scheduleGenerator, _currentGuide.CurrentPath);
+                xmlSchedule = new GenerateXmlSchedule(_currentSchedule.CurrentPath);
+                xmlGuide = new GenerateXmlGuide(_currentGuide.CurrentPath);
             }
             catch (System.Xml.XmlException ex)
             {
@@ -111,9 +102,26 @@ namespace MessageGenerator.Controller
                 return false;
             }
 
+            _guideGenerator = xmlGuide;
+            _scheduleGenerator = xmlSchedule;
+
+            _view.ShowErrorFlyout(sucsessText);
+
             _view.EnabledGenerateButton = reservation.LessonSchedules.Count > 0 ? true : false;
             _view.EnabledAddButton = true;
             return true;
+        }
+
+        private void LoadDefaultGuideXml()
+        {
+            string path = GetDefaultXmlPath(DefaultGuideKey);
+            _currentGuide.CurrentPath = path;
+        }
+
+        private void LoadDefaultScheduleXml()
+        {
+            string path = GetDefaultXmlPath(DefaultScheduleKey);
+            _currentSchedule.CurrentPath = path;
         }
 
         private string GetLocalDataPath()
