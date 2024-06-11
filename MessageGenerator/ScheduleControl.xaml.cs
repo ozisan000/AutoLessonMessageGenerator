@@ -16,6 +16,8 @@ namespace MessageGenerator
         public event EventHandler<RoutedEventArgs> ClickDeleteButton;
         public Grid ScheduleElement => scheduleElement;
 
+        public string Text => scheduleLabel.Text;
+
         public ScheduleControl(string scheduleText)
         {
             InitializeComponent();

@@ -35,6 +35,12 @@ namespace MessageGenerator.View
             ReDrawStripeBackground();
         }
 
+        public void ClearScheduleControls()
+        {
+            _scheduleControls.RemoveAll(x => true);
+            _scheduleStackPanel.Children.Clear();
+        }
+
         /// <summary>
         /// 
         /// </summary>

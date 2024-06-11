@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MessageGeneratorSystem.Generator
 {
@@ -35,6 +36,22 @@ namespace MessageGeneratorSystem.Generator
                 return ex.Message;
             }
             return "";
+        }
+
+        public static bool CheckFile(string checkPath)
+        {
+            if (checkPath == "") return false;
+            return File.Exists(checkPath);
+        }
+
+        public static string GetDocumentFolderPath()
+        {
+            string documentFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (!Directory.Exists(documentFolder))
+            {
+                Directory.CreateDirectory(documentFolder);
+            }
+            return documentFolder;
         }
     }
 }

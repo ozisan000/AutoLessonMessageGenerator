@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace MessageGeneratorSystem.Logic
 {
@@ -45,21 +46,22 @@ namespace MessageGeneratorSystem.Logic
             {
                 addSchedule
             };
-            return (new Reservation(this, newSchedules), ReservationError.SUCSESS);
+            return (new Reservation(this, newSchedules.OrderBy(s => s.StartSchedule).ToList()), 
+                ReservationError.SUCSESS);
         }
 
         public Reservation RemoveScheduleAt(int index)
         {
             List<DaySchedule> newSchedules = new List<DaySchedule>(LessonSchedules);
             newSchedules.RemoveAt(index);
-            return new Reservation(this, newSchedules);
+            return new Reservation(this, newSchedules.OrderBy(s => s.StartSchedule).ToList());
         }
 
         public Reservation RemoveSchedule(DaySchedule removeSchedule)
         {
             List<DaySchedule> newSchedules = new List<DaySchedule>(LessonSchedules);
             newSchedules.Remove(removeSchedule);
-            return new Reservation(this, newSchedules);
+            return new Reservation(this, newSchedules.OrderBy(s => s.StartSchedule).ToList());
         }
 
         public static bool CheckCoveredSchedule(IEnumerable<DaySchedule> schedules, DaySchedule checkSchedule)

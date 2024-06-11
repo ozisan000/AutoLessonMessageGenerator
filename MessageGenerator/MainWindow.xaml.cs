@@ -1,27 +1,9 @@
-using Native;
+using MessageGenerator.View;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
+using Native;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics;
-using MessageGenerator.Controller;
-using MessageGenerator.View;
-using Microsoft.UI.System;
-using Windows.UI;
-using Microsoft.UI;
-using Windows.ApplicationModel.DataTransfer;
-using MessageGenerator.Configuration;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -119,6 +101,11 @@ namespace MessageGenerator
             var control = new ScheduleControl(scheduleText);
             control.ClickDeleteButton += (s, a) => ClickRemoveScheduleButton(control);
             _scheduleControlList.AddScheduleControl(control);
+        }
+
+        public void ClearScheduleElements()
+        {
+            _scheduleControlList.ClearScheduleControls();
         }
 
         public void ShowGenerateDialog(string generated)

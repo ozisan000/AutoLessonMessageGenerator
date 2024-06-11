@@ -14,7 +14,7 @@ namespace MessageGenerator.Controller
     {
         private MainWindow _mainView;
         private Reservation _reservation;
-        private GeneratorController _generatorController;
+        private readonly GeneratorController _generatorController;
 
         //private DateItemGenerator _dateItemGenerator;
         //private GuideGenerator _guideGenerator;
@@ -32,11 +32,22 @@ namespace MessageGenerator.Controller
         {
             _mainView = mainView;
             _reservation = new Reservation(0);
+            _generatorController = new GeneratorController(_mainView);
             _mainView.ChangedLessonFee += UpdateLessonFee;
             _mainView.AddedShecule += AddSchedule;
             _mainView.RemovedAtSchedule += RemoveAtSchedule;
             _mainView.GeneratedMessage += GenerateGuideMessage;
-            _mainView.LoadXml += LoadXamlInit;
+            _mainView.LoadXml += LoadXaml;
+        }
+
+        private void RefreshSchedules()
+        {
+            _mainView.ClearScheduleElements();
+            foreach (var schedule in _reservation.LessonSchedules)
+            {
+                string scheduleText = _generatorController.GenerateScheduleText(_reservation, schedule);
+                _mainView.AddScheduleElement(scheduleText);
+            }
         }
 
         private void AddSchedule(DateTime start,DateTime end)
@@ -71,16 +82,14 @@ namespace MessageGenerator.Controller
             }
 
             _reservation = newReservation.result;
-            string scheduleText = _generatorController.GenerateScheduleText(newSchedule);
-
-            //mainViewに反映
-            _mainView.AddScheduleElement(scheduleText);
+            RefreshSchedules();
             _mainView.EnabledGenerateButton = true;
         }
 
         private void RemoveAtSchedule(int index)
         {
             _reservation = _reservation.RemoveScheduleAt(index);
+            RefreshSchedules();
             if (_reservation.LessonSchedules.Count <= 0)
                 _mainView.EnabledGenerateButton = false;
         }
@@ -103,9 +112,10 @@ namespace MessageGenerator.Controller
             _mainView.ShowGenerateDialog(result);
         }
 
-        public void LoadXamlInit()
+        public void LoadXaml()
         {
-            _generatorController = new GeneratorController(_mainView, _reservation);
+            //_generatorController.LoadDefaultXml(_reservation);
+            _generatorController.LoadCurrentXml(_reservation);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace MessageGeneratorSystem.Generator.Xml
 {
     public class GenerateXmlGuide
     {
-        private readonly string guideXmlPath;
+        private readonly XDocument _xDocument;
         private readonly XmlText _defaultText = new XmlText();
         private readonly XmlTitle _defaultTitle = new XmlTitle();
         private readonly GenerateXmlSchedule _generateXmlSchedule;
@@ -14,7 +14,7 @@ namespace MessageGeneratorSystem.Generator.Xml
 
         public GenerateXmlGuide(GenerateXmlSchedule generate,string guidePath,string defaultText = "[LoadGuideError]")
         {
-            this.guideXmlPath = guidePath;
+            _xDocument = XDocument.Load(guidePath, LoadOptions.PreserveWhitespace);
             _generateXmlSchedule = generate;
             this.defaultText = defaultText;
         }
@@ -40,12 +40,10 @@ namespace MessageGeneratorSystem.Generator.Xml
             XmlLine xmlLine = new XmlLine(xmlElements);
             xmlElements.Add(xmlLine);
 
-            XDocument xml = XDocument.Load(guideXmlPath, LoadOptions.PreserveWhitespace);
-
-            if (xml.Root == null) return defaultText;
+            if (_xDocument.Root == null) return defaultText;
 
             string result = "";
-            foreach (var element in xml.Root.Elements())
+            foreach (var element in _xDocument.Root.Elements())
             {
                 ITextGenXmlElement? genElement = xmlElements.Where(x => x.Key == element.Name).FirstOrDefault();
                 if (genElement == null) continue;
