@@ -30,6 +30,8 @@ namespace MessageGenerator.Controller
         private const string CurrentGuideKey = "CurrentGuide";
         private const string CurrentScheduleKey = "CurrentSchedule";
         private const string sucsessText = "Loaded Xml File!";
+        private const string loadDefautGuideText = "Not founded select file,Loaded default guide xml!";
+        private const string loadDefautScheduleText = "Not founded select file,Loaded default schedule xml!";
 
         public GeneratorController(MainWindow view)
         {
@@ -55,12 +57,27 @@ namespace MessageGenerator.Controller
 
         public bool LoadCurrentXml(Reservation reservation)
         {
-            if (!GeneratorDirectory.CheckFile(_currentGuide.CurrentPath)) 
+            bool isShowFlyout = true;
+            string loadText = "";
+            if (!GeneratorDirectory.CheckFile(_currentGuide.CurrentPath)) {
+                isShowFlyout = false;
+                loadText += loadDefautGuideText;
                 LoadDefaultGuideXml();
-            if (!GeneratorDirectory.CheckFile(_currentSchedule.CurrentPath)) 
+            }
+            if (!GeneratorDirectory.CheckFile(_currentSchedule.CurrentPath))
+            {
+                if (!isShowFlyout) 
+                    loadText += "\n";
+                else
+                    isShowFlyout = false;
+                
+                loadText += loadDefautScheduleText;
                 LoadDefaultScheduleXml();
+            }
 
-            return CreateGenerator(reservation);
+            if(!isShowFlyout) _view.ShowErrorFlyout(loadText);
+
+            return CreateGenerator(reservation, isShowFlyout);
         }
 
         public string GenerateScheduleText(DaySchedule schedule)
@@ -73,7 +90,7 @@ namespace MessageGenerator.Controller
             return _guideGenerator.GenerateGuide(reservation,_scheduleGenerator);
         }
 
-        private bool CreateGenerator(Reservation reservation)
+        private bool CreateGenerator(Reservation reservation,bool isShowFlyout = true)
         {
             _view.EnabledAddButton = false;
             _view.EnabledGenerateButton = false;
@@ -105,7 +122,7 @@ namespace MessageGenerator.Controller
             _guideGenerator = xmlGuide;
             _scheduleGenerator = xmlSchedule;
 
-            _view.ShowErrorFlyout(sucsessText);
+            if (isShowFlyout) _view.ShowErrorFlyout(sucsessText);
 
             _view.EnabledGenerateButton = reservation.LessonSchedules.Count > 0 ? true : false;
             _view.EnabledAddButton = true;

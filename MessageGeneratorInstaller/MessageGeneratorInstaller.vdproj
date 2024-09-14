@@ -27,13 +27,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_36BB27DECBBA4BEC91F8597E694E7B42"
+        "MsmKey" = "8:_4CC6208C707A49B7BC583C61D0832507"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4CC6208C707A49B7BC583C61D0832507"
+        "MsmKey" = "8:_75B57CB251F94E5D81E9BAAD86BA3F9A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8FD4DCE8C8534E228DB6B0514ECD9FCE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -80,6 +86,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -104,6 +118,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -182,6 +204,26 @@
             "TargetName" = "8:Readme.txt"
             "Tag" = "8:"
             "Folder" = "8:_58C6D3414A584625AE6939C35AF86BCF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8FD4DCE8C8534E228DB6B0514ECD9FCE"
+            {
+            "SourcePath" = "8:..\\MessageGenerator\\Assets\\MessageGeneratorIcon.ico"
+            "TargetName" = "8:MessageGeneratorIcon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_8857652DB22746B2BE37D670B4D25EB6"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -489,6 +531,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_5FF24103071842CFA6D95C0935B574C7"
+            {
+            "Name" = "8:MessageGenerator"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_75B57CB251F94E5D81E9BAAD86BA3F9A"
+            "Folder" = "8:_7FDF05E093BC4B01ACFDC77ECE88212D"
+            "WorkingFolder" = "8:_35E274BAA4594233B27FBCF29F2AE192"
+            "Icon" = "8:_8FD4DCE8C8534E228DB6B0514ECD9FCE"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_DE34EE855C864CAEB24FBC33300A3F4A"
+            {
+            "Name" = "8:MessageGenerator"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_75B57CB251F94E5D81E9BAAD86BA3F9A"
+            "Folder" = "8:_7EF66C1AA4B64FEE92DC6DD043DA9711"
+            "WorkingFolder" = "8:_35E274BAA4594233B27FBCF29F2AE192"
+            "Icon" = "8:_8FD4DCE8C8534E228DB6B0514ECD9FCE"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_E5FE12B83F914661962E31E4F3F75382"
             {
             "Name" = "8:Readme"
@@ -500,20 +570,6 @@
             "Target" = "8:_4CC6208C707A49B7BC583C61D0832507"
             "Folder" = "8:_7FDF05E093BC4B01ACFDC77ECE88212D"
             "WorkingFolder" = "8:_58C6D3414A584625AE6939C35AF86BCF"
-            "Icon" = "8:"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_EFAB3366229F4BD084FF692350B6E41B"
-            {
-            "Name" = "8:MessageGenerator"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_36BB27DECBBA4BEC91F8597E694E7B42"
-            "Folder" = "8:_7FDF05E093BC4B01ACFDC77ECE88212D"
-            "WorkingFolder" = "8:_35E274BAA4594233B27FBCF29F2AE192"
             "Icon" = "8:"
             "Feature" = "8:"
             }
@@ -916,7 +972,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_36BB27DECBBA4BEC91F8597E694E7B42"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_75B57CB251F94E5D81E9BAAD86BA3F9A"
             {
             "SourcePath" = "8:..\\MessageGenerator\\obj\\x64\\Release\\net6.0-windows10.0.19041.0\\win10-x64\\apphost.exe"
             "TargetName" = "8:"
